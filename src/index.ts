@@ -6,6 +6,7 @@ import express from "express";
 import { newRepositoryUser } from "./repositories/user";
 
 import { newHandlerUser } from "./handlers/user";
+
 import { newRepositoryBlacklist } from "./repositories/blacklist";
 import { HandlerMiddleware } from "./auth/jwt";
 
@@ -32,9 +33,11 @@ async function main() {
 
   const port = process.env.PORT || 8000;
   const server = express();
+  const authRouter = express.Router();
   const userRouter = express.Router();
 
   server.use(express.json());
+  server.use("/auth", authRouter);
   server.use("/user", userRouter);
 
   //check server
@@ -43,8 +46,9 @@ async function main() {
   });
 
   //user router
+  authRouter.post("/login", handlerUser.login.bind(handlerUser));
+
   userRouter.post("/register", handlerUser.register.bind(handlerUser));
-  userRouter.post("/login", handlerUser.login.bind(handlerUser));
   userRouter.get(
     "/logout",
     handlerMiddleware.jwtMiddleware.bind(handlerMiddleware),

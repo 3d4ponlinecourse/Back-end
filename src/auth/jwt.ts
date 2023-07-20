@@ -1,8 +1,7 @@
 import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
 import { IRepositoryBlacklist } from "../repositories";
-
-const secret = process.env.JWT_SECRET || "3d4p-secrets";
+import { secret } from ".";
 
 //create payload
 export interface Payload {
@@ -21,8 +20,8 @@ export function newJwt(payload: Payload): string {
   });
 }
 
-export interface JwtAuthRequest<Params, ResBody, Reqbody, ReqQuery>
-  extends Request<Params, ResBody, Reqbody, ReqQuery> {
+export interface JwtAuthRequest<Params, Body>
+  extends Request<Params, any, Body> {
   token: string;
   payload: Payload;
 }
@@ -34,11 +33,18 @@ export class HandlerMiddleware {
     this.repoBlacklist = repo;
   }
 
-  async jwtMiddleware(req: Request, res: Response, next: NextFunction) {
+  async jwtMiddleware(
+    req: JwtAuthRequest<any, any>,
+    res: Response,
+    next: NextFunction
+  ) {
     const token = req.header("Authorization")?.replace("Bearer ", "");
     try {
       if (!token) {
-        return res.status(401).json({ error: "missing JWT token" }).end();
+        return res
+          .status(401)
+          .json({ error: "missing JWT token in header" })
+          .end();
       }
 
       const isBlacklisted = await this.repoBlacklist.isBlacklisted(token);
@@ -51,13 +57,16 @@ export class HandlerMiddleware {
       const username = decoded["username"];
 
       if (!id) {
-        return res.status(401).json({ error: "missing payload `id" }).end();
+        return res
+          .status(401)
+          .json({ error: `missing payload ${id}` })
+          .end();
       }
 
       if (!username) {
         return res
           .status(401)
-          .json({ error: "missing payload `username" })
+          .json({ error: `missing payload ${username}` })
           .end();
       }
 

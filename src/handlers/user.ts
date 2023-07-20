@@ -1,10 +1,10 @@
-import { IHandlerUser } from ".";
+import { IHandlerUser, AppRequest, Empty, WithUser } from ".";
 import { IRepositoryBlacklist, IRepositoryUser } from "../repositories";
 import { hashPassword, compareHash } from "../auth/bcrypt";
 import { Request, Response } from "express";
 
 // import { JwtAuthRequest } from "../auth/jwt";
-import { newJwt } from "../auth/jwt";
+import { JwtAuthRequest, newJwt, Payload } from "../auth/jwt";
 
 //export
 export function newHandlerUser(
@@ -26,16 +26,14 @@ class HandlerUser implements IHandlerUser {
 
   //register
   async register(req: Request, res: Response): Promise<Response> {
-    const { username, password, firstname, lastname, email, gender, role } =
-      req.body;
+    const { username, password, firstname, lastname, email, gender } = req.body;
     if (
       !username ||
       !password ||
       !firstname ||
       !lastname ||
       !email ||
-      !gender ||
-      !role
+      !gender
     ) {
       return res
         .status(400)
@@ -51,7 +49,6 @@ class HandlerUser implements IHandlerUser {
         password: await hashPassword(password),
         email,
         gender,
-        role,
       });
 
       return res
@@ -62,12 +59,15 @@ class HandlerUser implements IHandlerUser {
       const errMsg = `failed to create account: ${username}`;
       console.log({ error: `${errMsg}: ${err}` });
 
-      return res.status(500).json({ error: errMsg }).edn();
+      return res.status(500).json({ error: errMsg }).end();
     }
   }
 
   //login
-  async login(req, res): Promise<Response> {
+  async login(
+    req: AppRequest<Empty, WithUser>,
+    res: Response
+  ): Promise<Response> {
     const { username, password } = req.body;
     if (!username || !password) {
       return res
@@ -76,41 +76,41 @@ class HandlerUser implements IHandlerUser {
         .end();
     }
 
-    try {
-      const user = await this.repo.getUser({ username });
-      if (!user) {
-        return res
-          .status(404)
-          .json({ error: `no such user: ${username}` })
-          .end();
-      }
+    return this.repo
+      .getUser(username)
+      .then((user) => {
+        if (!compareHash(password, user.password)) {
+          return res
+            .status(401)
+            .json({ error: "invalid name or password" })
+            .end();
+        }
+        const payload: Payload = { id: user.id, username: user.username };
+        const token = newJwt(payload);
 
-      //create authenticated
-      const authenticated = await compareHash(password, user.password);
-      if (!authenticated) {
         return res
-          .status(401)
-          .json({ error: `invalid username or password` })
+          .status(200)
+          .json({ status: "logged in", accessToken: token })
           .end();
-      }
-      //create t0ken
-      const token = newJwt({ username, id: user.id });
-
-      return res
-        .status(200)
-        .json({ status: `${username} logged in`, token }) //dont forget to return token
-        .end();
-    } catch (err) {
-      console.error({ error: `failed to get user ${err}` });
-      return res.status(500).json({ error: `failed to login` }).end();
-    }
+      })
+      .catch((err) => {
+        console.error(`failed to get user: ${err}`);
+        return res.status(500).end();
+      });
   }
 
-  async logout(req: Request, res: Response): Promise<Response> {
+  async logout(
+    req: JwtAuthRequest<Empty, Empty, Empty, Empty>,
+    res: Response
+  ): Promise<Response> {
     return await this.repoBlacklist
       .addToBlacklist(req.token)
       .then(() =>
         res.status(200).json({ status: `logged out`, token: req.token }).end()
-      );
+      )
+      .catch((err) => {
+        console.error(`failed to logout`);
+        return res.status(500).end();
+      });
   }
 }

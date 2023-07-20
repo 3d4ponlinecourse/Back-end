@@ -10,10 +10,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Role {
-  USER
-  ADMIN
-}
 
 enum Gender {
   FEMALE
@@ -33,7 +29,7 @@ model User {
   googleaccount   String?
   facebookaccount String?
   gender          Gender
-  role            Role
+
   course          Course[]
   comment         Comment[]
   registeredAt    DateTime  @default(now())
@@ -49,21 +45,32 @@ model Comment {
 
   userId String @unique
   user   User   @relation(fields: [userId], references: [id])
+
+  courseId  Int @unique
+  course  Course @relation(fields: [courseId], references: [id])
 }
 
 model Course {
   id          Int    @id @default(autoincrement())
   courseName  String @unique
   teacherName String @unique
+  videoUrl    String  
+  imageUrl    String
 
   duration    Int
   description String
-  comment     String
+
+  comment     Comment[]
 
   userId String  @unique
   user   User    @relation(fields: [userId], references: [id])
+
+  
+
   Lesson Lesson?
 }
+
+
 
 model Lesson {
   id          Int    @id @default(autoincrement())
