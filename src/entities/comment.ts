@@ -8,6 +8,7 @@ export interface ICreateCommentDto {
 
 export interface ICreateComment extends ICreateCommentDto {
   userId: string;
+  courseId: number;
 }
 
 export interface IComment extends ICreateComment {
@@ -26,7 +27,7 @@ export interface ICommentDto
   postedBy: IUserDto;
 }
 
-export function toIComentDto(data: ICommentWithUserDto): ICommentDto {
+export function toICommentDto(data: ICommentWithUserDto): ICommentDto {
   return {
     ...data,
     postedBy: data.user,
@@ -35,5 +36,5 @@ export function toIComentDto(data: ICommentWithUserDto): ICommentDto {
 
 // create function toICommentDtos that reciever array of ICommentWithUserDto and return arr of IContentDto
 export function toICommentDtos(data: ICommentWithUserDto[]): ICommentDto[] {
-  return data.map((data) => toIComentDto(data));
+  return data.map((data) => toICommentDto(data));
 }
