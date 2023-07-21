@@ -35,6 +35,3 @@ export type UserGender = keyof typeof Gender;
 // export function mapGender(gender: Gender): UserGender {
 //   return gender;
 // }
-
-// Remove field password
-export interface IUserDto extends Omit<IUser, "password"> {}

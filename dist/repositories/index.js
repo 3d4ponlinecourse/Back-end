@@ -8,8 +8,6 @@ exports.includeUser = {
         select: {
             id: true,
             username: true,
-            firstname: true,
-            lastname: true,
             password: false,
         },
     },

@@ -1,37 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const _1 = require(".");
-//export
-//create RepositoryCourse class
-class RepositoryCourse {
+exports.newRepository = void 0;
+//export function
+function newRepository(db) {
+    return new RepositortCourse(db);
+}
+exports.newRepository = newRepository;
+class RepositortCourse {
     constructor(db) {
         this.db = db;
     }
-    //create course
-    async createCourse(course) {
-        return this.db.course.create({
-            include: _1.includeUser,
-            data: {
-                ...course,
-                userId: undefined,
-                user: {
-                    connect: {
-                        id: course.userId,
-                    },
-                },
-            },
-        });
+    //get course
+    async getCourses() {
+        return await this.db.course.findMany({});
     }
-    async getCourse() {
-        return await this.db.course
-            .findMany({
-            include: _1.includeUser,
-        })
-            .then((course) => {
-            if (!course) {
-                return Promise.resolve([]);
-            }
-            return Promise.resolve(course);
+    //waiting for connected with comments
+    async getCourseById(id) {
+        return await this.db.course.findUnique({
+            where: {
+                id,
+            },
         });
     }
 }

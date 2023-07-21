@@ -11,7 +11,7 @@ function hashPassword(password) {
 }
 exports.hashPassword = hashPassword;
 function compareHash(password, hashed) {
-    return bcryptjs_1.default.compareHash(password, hashed);
+    return bcryptjs_1.default.compareSync(password, hashed);
 }
 exports.compareHash = compareHash;
 //# sourceMappingURL=bcrypt.js.map

@@ -12,18 +12,18 @@ export interface WithID {
 
 export interface WithUser {
   username: string;
-  name: string;
+  // name: string;
   password: string;
 }
 
-export interface WithUser {
-  username: string;
-  password: string;
-  firstname: string;
-  lastname: string;
-  email: string;
-  gender: UserGender;
-}
+// export interface WithUser {
+//   username: string;
+//   password: string;
+//   firstname: string;
+//   lastname: string;
+//   email: string;
+//   gender: UserGender;
+// }
 
 //handler user
 export interface IHandlerUser {
@@ -34,3 +34,6 @@ export interface IHandlerUser {
 
 //handler comment
 export interface IHandlerComment {}
+
+//hander course
+export interface IHandlerCourse {}

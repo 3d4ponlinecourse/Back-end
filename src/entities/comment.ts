@@ -1,12 +1,7 @@
-import { IUserDto } from "./user";
-
-export interface ICreateCommentDto {
+export interface ICreateComment {
   comment: string;
+  photo?: string | null;
   rating: number;
-  photo?: string;
-}
-
-export interface ICreateComment extends ICreateCommentDto {
   userId: string;
 }
 
@@ -14,26 +9,12 @@ export interface IComment extends ICreateComment {
   id: number;
   createdAt: Date;
   updatedAt: Date;
+  courseId: number;
 }
 
-export interface ICommentWithUserDto extends IComment {
-  user: IUserDto;
-}
-
-//remover userId and user from IConmentWithUserDto
-export interface ICommentDto
-  extends Omit<Omit<ICommentWithUserDto, "userId">, "user"> {
-  postedBy: IUserDto;
-}
-
-export function toIComentDto(data: ICommentWithUserDto): ICommentDto {
-  return {
-    ...data,
-    postedBy: data.user,
-  };
-}
-
-// create function toICommentDtos that reciever array of ICommentWithUserDto and return arr of IContentDto
-export function toICommentDtos(data: ICommentWithUserDto[]): ICommentDto[] {
-  return data.map((data) => toIComentDto(data));
+export interface IUpdateComment {
+  comment: string;
+  photo?: string | null;
+  rating: number;
+  userId: string;
 }

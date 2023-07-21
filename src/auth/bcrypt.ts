@@ -7,5 +7,5 @@ export function hashPassword(password: string): string {
 }
 
 export function compareHash(password: string, hashed: string): boolean {
-  return bcryptjs.compareHash(password, hashed);
+  return bcryptjs.compareSync(password, hashed);
 }

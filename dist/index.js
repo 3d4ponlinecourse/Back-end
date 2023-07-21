@@ -30,18 +30,16 @@ async function main() {
     const handlerMiddleware = new jwt_1.HandlerMiddleware(repoBlacklist);
     const port = process.env.PORT || 8000;
     const server = (0, express_1.default)();
-    const authRouter = express_1.default.Router();
     const userRouter = express_1.default.Router();
     server.use(express_1.default.json());
-    server.use("/auth", authRouter);
     server.use("/user", userRouter);
     //check server
     server.get("/", (_, res) => {
         return res.status(200).json({ status: "ok" }).end();
     });
     //user router
-    authRouter.post("/login", handlerUser.login.bind(handlerUser));
     userRouter.post("/register", handlerUser.register.bind(handlerUser));
+    userRouter.post("/login", handlerUser.login.bind(handlerUser));
     userRouter.get("/logout", handlerMiddleware.jwtMiddleware.bind(handlerMiddleware), handlerUser.logout.bind(handlerUser));
     server.listen(port, () => console.log(`server listening on ${port}`));
 }

@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { ICreateUser, IUser } from "../entities/user";
 import { ICourse } from "../entities/course";
-import { ICreateCommentDto } from "../entities/comment";
+import { ICreateComment, IComment } from "../entities/comment";
 
 import { JwtAuthRequest } from "../auth/jwt";
 
@@ -12,8 +12,6 @@ export const includeUser = {
     select: {
       id: true,
       username: true,
-      firstname: true,
-      lastname: true,
       password: false,
     },
   },
@@ -34,4 +32,12 @@ export interface IRepositoryCourse {
   getCourseById(id: number): Promise<ICourse | null>;
 }
 
-export interface IRepositoryComment {}
+export interface IRepositoryComment {
+  createComment(comment: ICreateComment): Promise<IComment>;
+  getComments(): Promise<IComment[]>;
+  getCommentById(id: number): Promise<IComment>;
+  updateComment(
+    where: { id: number; userId: string },
+    data: { rating: number | undefined; comment: string }
+  ): Promise<IComment>;
+}
