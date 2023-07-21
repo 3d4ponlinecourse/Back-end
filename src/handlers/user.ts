@@ -100,7 +100,7 @@ class HandlerUser implements IHandlerUser {
   }
 
   async logout(
-    req: JwtAuthRequest<Empty, Empty, Empty, Empty>,
+    req: JwtAuthRequest<Empty, Empty>,
     res: Response
   ): Promise<Response> {
     return await this.repoBlacklist

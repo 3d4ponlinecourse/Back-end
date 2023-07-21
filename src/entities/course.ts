@@ -3,5 +3,11 @@ export interface ICreateCourse {
   videoUrl: string;
   duration: number;
   description: string;
-  teacherName: string;
 }
+
+export interface ICourse extends ICreateCourse {
+  id: number;
+  userId: string;
+}
+
+updatedAt: Date;

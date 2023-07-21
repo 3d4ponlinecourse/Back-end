@@ -56,7 +56,7 @@ model Course {
   teacherName String @unique
   videoUrl    String  
   imageUrl    String
-
+  
   duration    Int
   description String
 

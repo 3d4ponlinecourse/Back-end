@@ -30,20 +30,8 @@ export interface IRepositoryBlacklist {
 }
 
 export interface IRepositoryCourse {
-  getCourse(): Promise<ICourse[]>;
+  getCourses(): Promise<ICourse[]>;
+  getCourseById(id: number): Promise<ICourse | null>;
 }
 
-export interface IRepositoryComment {
-  createComment(
-    req: JwtAuthRequest<{}, {}, ICreateCommentDto, {}>,
-    res: Response
-  ): Promise<Response>;
-  getComments(
-    req: JwtAuthRequest<{}, {}, {}, {}>,
-    res: Response
-  ): Promise<Response>;
-  getComment(
-    req: JwtAuthRequest<{ id: number }, {}, {}, {}>,
-    res: Response
-  ): Promise<Response>;
-}
+export interface IRepositoryComment {}

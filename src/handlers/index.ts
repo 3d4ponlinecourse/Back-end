@@ -29,10 +29,7 @@ export interface WithUser {
 export interface IHandlerUser {
   register(req: Request, res: Response): Promise<Response>;
   login(req: AppRequest<Empty, WithUser>, res: Response): Promise<Response>;
-  logout(
-    req: JwtAuthRequest<Empty, Empty, Empty, Empty>,
-    res: Response
-  ): Promise<Response>;
+  logout(req: JwtAuthRequest<Empty, Empty>, res: Response): Promise<Response>;
 }
 
 //handler comment
