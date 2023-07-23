@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
-import { UserGender } from "../entities/user";
 import { JwtAuthRequest } from "../auth/jwt";
+
+import { ICreateComment } from "../entities/comment";
 
 export interface AppRequest<Params, Body> extends Request<Params, any, Body> {}
 
@@ -14,6 +15,11 @@ export interface WithUser {
   username: string;
   // name: string;
   password: string;
+}
+
+export interface WithComment {
+  rating: number;
+  comment: string;
 }
 
 // export interface WithUser {
@@ -33,7 +39,34 @@ export interface IHandlerUser {
 }
 
 //handler comment
-export interface IHandlerComment {}
+export interface IHandlerComment {
+  createComment(
+    req: JwtAuthRequest<{}, ICreateComment>,
+    res: Response
+  ): Promise<Response>;
+  getComments(req: JwtAuthRequest<{}, {}>, res: Response): Promise<Response>;
+  getCommentById(
+    req: JwtAuthRequest<{ id: number }, {}>,
+    res: Response
+  ): Promise<Response>;
+  updateComment(
+    req: JwtAuthRequest<WithID, WithComment>,
+    res: Response
+  ): Promise<Response>;
+  deleteComment(
+    req: JwtAuthRequest<WithID, WithComment>,
+    res: Response
+  ): Promise<Response>;
+}
 
 //hander course
-export interface IHandlerCourse {}
+export interface IHandlerCourse {
+  getCourses(
+    req: JwtAuthRequest<Empty, Empty>,
+    res: Response
+  ): Promise<Response>;
+  getCourseById(
+    req: JwtAuthRequest<WithID, Empty>,
+    res: Response
+  ): Promise<Response>;
+}

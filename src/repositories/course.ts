@@ -4,7 +4,7 @@ import { ICreateCourse, ICourse } from "../entities/course";
 import { IRepositoryCourse } from ".";
 
 //export function
-export function newRepository(db: PrismaClient): IRepositoryCourse {
+export function newRepositoryCourse(db: PrismaClient): IRepositoryCourse {
   return new RepositortCourse(db);
 }
 
@@ -13,6 +13,22 @@ class RepositortCourse implements IRepositoryCourse {
 
   constructor(db: PrismaClient) {
     this.db = db;
+  }
+
+  async createCourse(course: ICreateCourse): Promise<ICourse> {
+    return await this.db.course.create({
+      data: {
+        courseName: course.courseName,
+        videoUrl: course.videoUrl,
+        duration: course.duration,
+        description: course.description,
+        user: {
+          connect: {
+            id: course.userId,
+          },
+        },
+      },
+    });
   }
 
   //get course

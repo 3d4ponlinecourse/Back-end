@@ -53,9 +53,8 @@ model Comment {
 model Course {
   id          Int    @id @default(autoincrement())
   courseName  String @unique
-  teacherName String @unique
   videoUrl    String  
-  imageUrl    String
+  imageUrl    String?
   
   duration    Int
   description String
@@ -64,8 +63,6 @@ model Course {
 
   userId String  @unique
   user   User    @relation(fields: [userId], references: [id])
-
-  
 
   Lesson Lesson?
 }

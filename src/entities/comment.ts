@@ -3,13 +3,13 @@ export interface ICreateComment {
   photo?: string | null;
   rating: number;
   userId: string;
+  courseId: number;
 }
 
 export interface IComment extends ICreateComment {
   id: number;
   createdAt: Date;
   updatedAt: Date;
-  courseId: number;
 }
 
 export interface IUpdateComment {

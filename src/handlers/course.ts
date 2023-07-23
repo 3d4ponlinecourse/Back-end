@@ -16,7 +16,7 @@ class HandlerCourse implements IHandlerCourse {
     this.repo = repo;
   }
 
-  async getCourse(
+  async getCourses(
     req: JwtAuthRequest<Empty, Empty>,
     res: Response
   ): Promise<Response> {
@@ -29,7 +29,7 @@ class HandlerCourse implements IHandlerCourse {
       });
   }
 
-  async getTodoById(
+  async getCourseById(
     req: JwtAuthRequest<WithID, Empty>,
     res: Response
   ): Promise<Response> {

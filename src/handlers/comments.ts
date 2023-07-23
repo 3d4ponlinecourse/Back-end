@@ -1,9 +1,8 @@
 import { Response } from "express";
-import { PrismaClient } from "@prisma/client";
 
 import { IRepositoryComment } from "../repositories";
-import { ICreateComment, IComment, IUpdateComment } from "../entities/comment";
-import { IHandlerComment, WithID } from ".";
+import { ICreateComment } from "../entities/comment";
+import { IHandlerComment, WithComment, WithID } from ".";
 import { JwtAuthRequest } from "../auth/jwt";
 
 //export
@@ -26,9 +25,12 @@ class HandlerComment implements IHandlerComment {
     if (!createComment.rating) {
       return res.status(400).json({ error: "missing rating in body" });
     }
+    //const userId = req.payload.id;
+
     try {
-      const userId = req.payload.id;
-      const createdComment = await this.repo.createComment({ userId });
+      const createdComment = await this.repo.createComment({
+        ...createComment,
+      });
       return res.status(201).json(createdComment).end();
     } catch (err) {
       const errMsg = "failed to create comment";
@@ -51,7 +53,7 @@ class HandlerComment implements IHandlerComment {
     }
   }
 
-  async getComment(
+  async getCommentById(
     req: JwtAuthRequest<{ id: number }, {}>,
     res: Response
   ): Promise<Response> {
@@ -84,13 +86,50 @@ class HandlerComment implements IHandlerComment {
   }
 
   async updateComment(
-    req: JwtAuthRequest<WithID, ICreateComment>,
+    req: JwtAuthRequest<WithID, WithComment>,
     res: Response
   ): Promise<Response> {
     const id = Number(req.params.id);
     if (isNaN(id)) {
       return res.status(400).json({ error: `id` });
     }
-    // not finish yet
+    let comment: string | undefined = req.body.comment;
+    let rating: number | undefined = req.body.rating;
+
+    if (!comment) {
+      return res
+        .status(400)
+        .json({ error: "missing comment in json body" })
+        .end();
+    }
+
+    return this.repo
+      .updateComment({ id, userId: req.payload.id }, { rating, comment })
+      .then((updated) => res.status(201).json(updated).end())
+      .catch((err) => {
+        const errMsg = "failed to create comment";
+        console.error(`${errMsg} ${err}`);
+        return res.status(500).json({ error: errMsg }).end();
+      });
+  }
+
+  async deleteComment(
+    req: JwtAuthRequest<WithID, WithComment>,
+    res: Response
+  ): Promise<Response> {
+    const id = Number(req.params.id);
+    if (isNaN(id)) {
+      return res.status(400).json({ error: `id ${id} is not a number` });
+    }
+
+    return this.repo
+      .deleteComment({ id, userId: req.payload.id })
+      .then((deleted) => res.status(200).json(deleted).end())
+      .catch((err) => {
+        console.error(`failed to delete comment ${id}: ${err}`);
+        return res
+          .status(500)
+          .json({ error: `failed to delete comment ${id}` });
+      });
   }
 }

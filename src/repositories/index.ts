@@ -3,8 +3,6 @@ import { ICreateUser, IUser } from "../entities/user";
 import { ICourse } from "../entities/course";
 import { ICreateComment, IComment } from "../entities/comment";
 
-import { JwtAuthRequest } from "../auth/jwt";
-
 export const UserDb = new PrismaClient();
 
 export const includeUser = {
@@ -13,6 +11,8 @@ export const includeUser = {
       id: true,
       username: true,
       password: false,
+      course: true,
+      comment: true,
     },
   },
 };
@@ -38,6 +38,7 @@ export interface IRepositoryComment {
   getCommentById(id: number): Promise<IComment>;
   updateComment(
     where: { id: number; userId: string },
-    data: { rating: number | undefined; comment: string }
+    data: { rating: number; comment: string }
   ): Promise<IComment>;
+  deleteComment(where: { id: number; userId: string }): Promise<IComment>;
 }

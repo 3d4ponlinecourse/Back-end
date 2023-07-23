@@ -21,9 +21,15 @@ class RepositoryComment implements IRepositoryComment {
       data: {
         ...comment,
         userId: undefined,
+        courseId: undefined,
         user: {
           connect: {
             id: comment.userId,
+          },
+        },
+        course: {
+          connect: {
+            id: comment.courseId,
           },
         },
       },
@@ -62,7 +68,7 @@ class RepositoryComment implements IRepositoryComment {
 
   async updateComment(
     where: { id: number; userId: string },
-    data: { rating: number | undefined; comment: string }
+    data: { rating: number; comment: string }
   ): Promise<IComment> {
     return await this.db.comment
       .update({ include: includeUser, where, data })
