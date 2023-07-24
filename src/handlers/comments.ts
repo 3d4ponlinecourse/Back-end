@@ -47,7 +47,7 @@ class HandlerComment implements IHandlerComment {
       const comments = await this.repo.getComments();
       return res.status(200).json(comments).end();
     } catch (err) {
-      const errMsg = "failed to create comment";
+      const errMsg = "failed to get comments";
       console.error(`${errMsg} ${err}`);
       return res.status(500).json({ error: errMsg }).end();
     }

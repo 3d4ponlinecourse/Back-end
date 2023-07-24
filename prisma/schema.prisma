@@ -32,6 +32,7 @@ model User {
 
   course          Course[]
   comment         Comment[]
+  enrollment      Enrollment[]
   registeredAt    DateTime  @default(now())
 }
 
@@ -60,10 +61,31 @@ model Course {
   description String
 
   comment     Comment[]
-  
+  lesson      Lesson[]
+  enrollment  Enrollment[]
 
   userId String  @unique
   user   User    @relation(fields: [userId], references: [id])  
 }
 
+model Lesson {
+  id          Int    @id @default(autoincrement())
+  lessonName String
+  videoUrl    String 
+  duration    String
 
+  courseId Int    @unique
+  course   Course @relation(fields: [courseId], references: [id])
+} 
+
+model Enrollment {
+  id          Int    @id @default(autoincrement())
+  courseName  String
+
+  courseId    Int    
+  course      Course  @relation(fields: [courseId], references: [id])
+
+  userId      String  @unique
+  user        User    @relation(fields: [userId], references: [id])
+
+}

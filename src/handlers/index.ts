@@ -70,3 +70,9 @@ export interface IHandlerCourse {
     res: Response
   ): Promise<Response>;
 }
+
+export interface IHandlerLesson {
+  createLesson(req: Request, res: Response): Promise<Response>;
+  getLessons(req: Request, res: Response): Promise<Response>;
+  getLessonById(req: Request<{ id: number }>, res: Response): Promise<Response>;
+}
