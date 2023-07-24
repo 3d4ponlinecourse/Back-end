@@ -60,19 +60,10 @@ model Course {
   description String
 
   comment     Comment[]
+  
 
   userId String  @unique
-  user   User    @relation(fields: [userId], references: [id])
-
-  Lesson Lesson?
+  user   User    @relation(fields: [userId], references: [id])  
 }
 
-model Lesson {
-  id          Int    @id @default(autoincrement())
-  lessonName String
-  videoUrl    String 
-  duration    String
 
-  courseId Int    @unique
-  course   Course @relation(fields: [courseId], references: [id])
-} 
