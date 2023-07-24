@@ -1,7 +1,7 @@
 export interface ICreateCourse {
   courseName: string;
   videoUrl: string;
-  duration: number;
+  duration: string;
   description: string;
   userId: string;
 }

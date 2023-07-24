@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { ICreateUser, IUser } from "../entities/user";
 import { ICourse } from "../entities/course";
 import { ICreateComment, IComment } from "../entities/comment";
+import { ICreateLesson, ILesson } from "../entities/lesson";
 
 export const UserDb = new PrismaClient();
 
@@ -41,4 +42,11 @@ export interface IRepositoryComment {
     data: { rating: number; comment: string }
   ): Promise<IComment>;
   deleteComment(where: { id: number; userId: string }): Promise<IComment>;
+}
+
+export interface IRepositoryLesson {
+  createLesson(les: ICreateLesson): Promise<ILesson>;
+  getLessons(): Promise<ILesson[]>;
+  getLessonById(id: number): Promise<ILesson | null>;
+  getLessonByCourseId(id: number): Promise<ILesson[]>;
 }
