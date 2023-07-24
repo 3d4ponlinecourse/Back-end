@@ -3,6 +3,7 @@ import { ICreateUser, IUser } from "../entities/user";
 import { ICourse } from "../entities/course";
 import { ICreateComment, IComment } from "../entities/comment";
 import { ICreateLesson, ILesson } from "../entities/lesson";
+import { IEnrollment } from "../entities/enrollment";
 
 export const UserDb = new PrismaClient();
 
@@ -49,4 +50,9 @@ export interface IRepositoryLesson {
   getLessons(): Promise<ILesson[]>;
   getLessonById(id: number): Promise<ILesson | null>;
   getLessonByCourseId(id: number): Promise<ILesson[]>;
+}
+
+export interface IRepositoryEnroll {
+  getUserEnroll(courseId: number): Promise<IEnrollment[]>;
+  getAllEnroll(): Promise<IEnrollment[]>;
 }
