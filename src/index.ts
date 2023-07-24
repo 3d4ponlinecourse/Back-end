@@ -13,6 +13,8 @@ import { newRepositoryCourse } from "./repositories/course";
 import { newRepositoryComment } from "./repositories/comment";
 import { newHandlerComment } from "./handlers/comments";
 import { newHandlerCourse } from "./handlers/course";
+import { newRepositoryLesson } from "./repositories/lesson";
+import { newHandlerLesson } from "./handlers/lesson";
 
 //create main function
 async function main() {
@@ -32,10 +34,14 @@ async function main() {
   const repoUser = newRepositoryUser(db);
   const repoCouse = newRepositoryCourse(db);
   const repoComment = newRepositoryComment(db);
+  const repoLesson = newRepositoryLesson(db);
+
   const repoBlacklist = newRepositoryBlacklist(redis);
+
   const handlerUser = newHandlerUser(repoUser, repoBlacklist);
   const handlerCourse = newHandlerCourse(repoCouse);
   const handlerComment = newHandlerComment(repoComment);
+  const handlerLesson = newHandlerLesson(repoLesson);
 
   const handlerMiddleware = new HandlerMiddleware(repoBlacklist);
 
@@ -44,10 +50,12 @@ async function main() {
   const userRouter = express.Router();
   const courseRouter = express.Router();
   const commentRouter = express.Router();
+  const lessonRouter = express.Router();
 
   server.use(express.json());
   server.use("/user", userRouter);
   server.use("/course", courseRouter);
+  server.use("/lesson", lessonRouter);
   server.use("/comment", commentRouter);
 
   //check server
@@ -69,6 +77,10 @@ async function main() {
   //courseRouter.use(handlerMiddleware.jwtMiddleware.bind(handlerMiddleware));
   courseRouter.get("/", handlerCourse.getCourses.bind(handlerCourse));
   courseRouter.get("/:id", handlerCourse.getCourseById.bind(handlerCourse));
+
+  //lesson
+  lessonRouter.get("/", handlerLesson.getLessons.bind(handlerLesson));
+  lessonRouter.get("/:id", handlerLesson.getLessonById.bind(handlerLesson));
 
   //comment
   commentRouter.use(handlerMiddleware.jwtMiddleware.bind(handlerMiddleware));
