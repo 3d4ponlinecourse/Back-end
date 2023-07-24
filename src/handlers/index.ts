@@ -76,3 +76,8 @@ export interface IHandlerLesson {
   getLessons(req: Request, res: Response): Promise<Response>;
   getLessonById(req: Request<{ id: number }>, res: Response): Promise<Response>;
 }
+
+export interface IHandlerEnroll {
+  getUserEnroll(req: Request, res: Response): Promise<Response>;
+  getEntolls(req: Request, res: Response): Promise<Response>;
+}
