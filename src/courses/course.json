@@ -1,0 +1,197 @@
+[
+  {
+    "id": 1,
+    "courseName": "Basics",
+    "videoUrl": "https://www.youtube.com/watch?v=nIoXOplUvAw&pp=ygUNZG9udXQgYmxlbmRlcg%3D%3D",
+    "imageUrl": "https://threejs-journey.com/assets/images/program/chapter-01@2x.webp",
+    "duration": "9h 54mn",
+    "description": "Create your first scene and understand fundamentals like cameras, geometries, materials, textures. Add a debug panel to tweak your environment and animate everything.",
+    "comment": [],
+    "Lesson": [
+      {
+        "id": 1,
+        "lessonName": "Introduction",
+        "videoUrl": "https://www.youtube.com/watch?v=nIoXOplUvAw&pp=ygUNZG9udXQgYmxlbmRlcg%3D%3D",
+        "duration": "35mn"
+      },
+      {
+        "id": 2,
+        "lessonName": "What is WebGL and why use Three.js",
+        "videoUrl": "https://www.youtube.com/watch?v=nIoXOplUvAw&pp=ygUNZG9udXQgYmxlbmRlcg%3D%3D",
+        "duration": "23mn"
+      },
+      {
+        "id": 3,
+        "lessonName": "Basic scene",
+        "videoUrl": "https://www.youtube.com/watch?v=nIoXOplUvAw&pp=ygUNZG9udXQgYmxlbmRlcg%3D%3D",
+        "duration": "36mn"
+      },
+      {
+        "id": 4,
+        "lessonName": "Local Server",
+        "videoUrl": "https://www.youtube.com/watch?v=nIoXOplUvAw&pp=ygUNZG9udXQgYmxlbmRlcg%3D%3D",
+        "duration": "41mn"
+      },
+      {
+        "id": 5,
+        "lessonName": "Transform objects",
+        "videoUrl": "https://www.youtube.com/watch?v=nIoXOplUvAw&pp=ygUNZG9udXQgYmxlbmRlcg%3D%3D",
+        "duration": "46mn"
+      },
+      {
+        "id": 6,
+        "lessonName": "Animations",
+        "videoUrl": "https://www.youtube.com/watch?v=nIoXOplUvAw&pp=ygUNZG9udXQgYmxlbmRlcg%3D%3D",
+        "duration": "30mn"
+      },
+      {
+        "id": 7,
+        "lessonName": "Cameras",
+        "videoUrl": "https://www.youtube.com/watch?v=nIoXOplUvAw&pp=ygUNZG9udXQgYmxlbmRlcg%3D%3D",
+        "duration": "57mn"
+      },
+      {
+        "id": 8,
+        "lessonName": "Fullscreen and resizing",
+        "videoUrl": "https://www.youtube.com/watch?v=nIoXOplUvAw&pp=ygUNZG9udXQgYmxlbmRlcg%3D%3D",
+        "duration": "30mn"
+      },
+      {
+        "id": 9,
+        "lessonName": "Geometries",
+        "videoUrl": "https://www.youtube.com/watch?v=nIoXOplUvAw&pp=ygUNZG9udXQgYmxlbmRlcg%3D%3D",
+        "duration": "35mn"
+      },
+      {
+        "id": 10,
+        "lessonName": "Debug UI",
+        "videoUrl": "https://www.youtube.com/watch?v=nIoXOplUvAw&pp=ygUNZG9udXQgYmxlbmRlcg%3D%3D",
+        "duration": "35mn"
+      },
+      {
+        "id": 11,
+        "lessonName": "Textures",
+        "videoUrl": "https://www.youtube.com/watch?v=nIoXOplUvAw&pp=ygUNZG9udXQgYmxlbmRlcg%3D%3D",
+        "duration": "1h 14mn"
+      },
+      {
+        "id": 12,
+        "lessonName": "Materials",
+        "videoUrl": "https://www.youtube.com/watch?v=nIoXOplUvAw&pp=ygUNZG9udXQgYmxlbmRlcg%3D%3D",
+        "duration": "1h 17mn"
+      },
+      {
+        "id": 13,
+        "lessonName": "3D Text",
+        "videoUrl": "https://www.youtube.com/watch?v=nIoXOplUvAw&pp=ygUNZG9udXQgYmxlbmRlcg%3D%3D",
+        "duration": "44mn"
+      },
+      {
+        "id": 14,
+        "lessonName": "Go live",
+        "videoUrl": "https://www.youtube.com/watch?v=nIoXOplUvAw&pp=ygUNZG9udXQgYmxlbmRlcg%3D%3D",
+        "duration": "24mn"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "courseName": "Classic techniques",
+    "videoUrl": "https://www.youtube.com/watch?v=nIoXOplUvAw&pp=ygUNZG9udXQgYmxlbmRlcg%3D%3D",
+    "imageUrl": "https://threejs-journey.com/assets/images/program/chapter-01@2x.webp",
+    "duration": "6h 20mn",
+    "description": "Illuminate your scene with various lights, start practicing environment creation and create millions of particles.",
+    "comment": [],
+    "Lesson": [
+      {
+        "id": 15,
+        "lessonName": "Lights",
+        "videoUrl": "https://www.youtube.com/watch?v=nIoXOplUvAw&pp=ygUNZG9udXQgYmxlbmRlcg%3D%3D",
+        "duration": "42mn"
+      },
+      {
+        "id": 16,
+        "lessonName": "Shadows",
+        "videoUrl": "https://www.youtube.com/watch?v=nIoXOplUvAw&pp=ygUNZG9udXQgYmxlbmRlcg%3D%3D",
+        "duration": "1h 01mn"
+      },
+      {
+        "id": 17,
+        "lessonName": "Haunted House",
+        "videoUrl": "https://www.youtube.com/watch?v=nIoXOplUvAw&pp=ygUNZG9udXQgYmxlbmRlcg%3D%3D",
+        "duration": "1h 15mn"
+      },
+      {
+        "id": 18,
+        "lessonName": "Particles",
+        "videoUrl": "https://www.youtube.com/watch?v=nIoXOplUvAw&pp=ygUNZG9udXQgYmxlbmRlcg%3D%3D",
+        "duration": "49mn"
+      },
+      {
+        "id": 19,
+        "lessonName": "Galaxy Generator",
+        "videoUrl": "https://www.youtube.com/watch?v=nIoXOplUvAw&pp=ygUNZG9udXQgYmxlbmRlcg%3D%3D",
+        "duration": "1h 08mn"
+      },
+      {
+        "id": 20,
+        "lessonName": "Scroll based animation",
+        "videoUrl": "https://www.youtube.com/watch?v=nIoXOplUvAw&pp=ygUNZG9udXQgYmxlbmRlcg%3D%3D",
+        "duration": "1h 23mn"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "courseName": "Advanced techniques",
+    "videoUrl": "https://www.youtube.com/watch?v=nIoXOplUvAw&pp=ygUNZG9udXQgYmxlbmRlcg%3D%3D",
+    "imageUrl": "https://threejs-journey.com/assets/images/program/chapter-01@2x.webp",
+    "duration": "12h 37mn",
+    "description": "Add physics to your world so that objects start to collide and stumble. Then import your own model made with Blender and make it look as realistic as possible.",
+    "comment": [],
+    "Lesson": [
+      {
+        "id": 1,
+        "lessonName": "Physics",
+        "videoUrl": "https://www.youtube.com/watch?v=nIoXOplUvAw&pp=ygUNZG9udXQgYmxlbmRlcg%3D%3D",
+        "duration": "1h 57mn"
+      },
+      {
+        "id": 2,
+        "lessonName": "Imported models",
+        "videoUrl": "https://www.youtube.com/watch?v=nIoXOplUvAw&pp=ygUNZG9udXQgYmxlbmRlcg%3D%3D",
+        "duration": "1h 07mn"
+      },
+      {
+        "id": 3,
+        "lessonName": "Raycaster and Mouse Events",
+        "videoUrl": "https://www.youtube.com/watch?v=nIoXOplUvAw&pp=ygUNZG9udXQgYmxlbmRlcg%3D%3D",
+        "duration": "1h 07mn"
+      },
+      {
+        "id": 4,
+        "lessonName": "Custom models with Blender",
+        "videoUrl": "https://www.youtube.com/watch?v=nIoXOplUvAw&pp=ygUNZG9udXQgYmxlbmRlcg%3D%3D",
+        "duration": "1h 59mn"
+      },
+      {
+        "id": 5,
+        "lessonName": "Environment map",
+        "videoUrl": "https://www.youtube.com/watch?v=nIoXOplUvAw&pp=ygUNZG9udXQgYmxlbmRlcg%3D%3D",
+        "duration": "1h 49mn"
+      },
+      {
+        "id": 6,
+        "lessonName": "Realistic render",
+        "videoUrl": "https://www.youtube.com/watch?v=nIoXOplUvAw&pp=ygUNZG9udXQgYmxlbmRlcg%3D%3D",
+        "duration": "1h 16mn"
+      },
+      {
+        "id": 7,
+        "lessonName": "Code structuring for bigger projects",
+        "videoUrl": "https://www.youtube.com/watch?v=nIoXOplUvAw&pp=ygUNZG9udXQgYmxlbmRlcg%3D%3D",
+        "duration": "3h 19mn"
+      }
+    ]
+  }
+]

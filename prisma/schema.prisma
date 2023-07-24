@@ -56,7 +56,7 @@ model Course {
   videoUrl    String  
   imageUrl    String?
   
-  duration    Int
+  duration    String
   description String
 
   comment     Comment[]
@@ -67,12 +67,12 @@ model Course {
   Lesson Lesson?
 }
 
-
-
 model Lesson {
   id          Int    @id @default(autoincrement())
-  lessionName String
+  lessonName String
+  videoUrl    String 
+  duration    String
 
   courseId Int    @unique
   course   Course @relation(fields: [courseId], references: [id])
-}
+} 
