@@ -1,14 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.newRepository = void 0;
+exports.newRepositoryCourse = void 0;
 //export function
-function newRepository(db) {
+function newRepositoryCourse(db) {
     return new RepositortCourse(db);
 }
-exports.newRepository = newRepository;
+exports.newRepositoryCourse = newRepositoryCourse;
 class RepositortCourse {
     constructor(db) {
         this.db = db;
+    }
+    async createCourse(course) {
+        return await this.db.course.create({
+            data: {
+                courseName: course.courseName,
+                videoUrl: course.videoUrl,
+                duration: course.duration,
+                description: course.description,
+            },
+        });
     }
     //get course
     async getCourses() {

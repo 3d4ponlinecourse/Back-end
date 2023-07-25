@@ -17,9 +17,15 @@ class RepositoryComment {
             data: {
                 ...comment,
                 userId: undefined,
+                courseId: undefined,
                 user: {
                     connect: {
                         id: comment.userId,
+                    },
+                },
+                course: {
+                    connect: {
+                        id: comment.courseId,
                     },
                 },
             },

@@ -75,10 +75,12 @@ async function main() {
 
   //course
   //courseRouter.use(handlerMiddleware.jwtMiddleware.bind(handlerMiddleware));
+  courseRouter.post("/", handlerCourse.createCourse.bind(handlerCourse));
   courseRouter.get("/", handlerCourse.getCourses.bind(handlerCourse));
   courseRouter.get("/:id", handlerCourse.getCourseById.bind(handlerCourse));
 
   //lesson
+  lessonRouter.post("/", handlerLesson.createLesson.bind(handlerLesson));
   lessonRouter.get("/", handlerLesson.getLessons.bind(handlerLesson));
   lessonRouter.get("/:id", handlerLesson.getLessonById.bind(handlerLesson));
 

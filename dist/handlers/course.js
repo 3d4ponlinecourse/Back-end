@@ -10,7 +10,30 @@ class HandlerCourse {
     constructor(repo) {
         this.repo = repo;
     }
-    async getCourse(req, res) {
+    async createCourse(req, res) {
+        const { courseName, videoUrl, duration, description } = req.body;
+        if (!courseName || !videoUrl || !duration || !description) {
+            return res
+                .status(400)
+                .json({ error: " missing some fields in body" })
+                .end();
+        }
+        try {
+            const course = await this.repo.createCourse({
+                courseName,
+                videoUrl,
+                duration,
+                description,
+            });
+            return res.status(200).json(course).end();
+        }
+        catch (err) {
+            const errMsg = "failed to create course";
+            console.error(`${errMsg} ${err}`);
+            return res.status(500).json({ error: errMsg }).end();
+        }
+    }
+    async getCourses(req, res) {
         return this.repo
             .getCourses()
             .then((courses) => res.status(200).json(courses).end())
@@ -19,7 +42,7 @@ class HandlerCourse {
             return res.status(500).json({ error: `failed to get courses` });
         });
     }
-    async getTodoById(req, res) {
+    async getCourseById(req, res) {
         const id = Number(req.params.id);
         if (isNaN(id)) {
             return res

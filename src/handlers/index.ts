@@ -61,6 +61,7 @@ export interface IHandlerComment {
 
 //hander course
 export interface IHandlerCourse {
+  createCourse(req: Request, res: Response): Promise<Response>;
   getCourses(
     req: JwtAuthRequest<Empty, Empty>,
     res: Response

@@ -22,11 +22,6 @@ class RepositortCourse implements IRepositoryCourse {
         videoUrl: course.videoUrl,
         duration: course.duration,
         description: course.description,
-        user: {
-          connect: {
-            id: course.userId,
-          },
-        },
       },
     });
   }

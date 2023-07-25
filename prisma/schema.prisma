@@ -30,7 +30,6 @@ model User {
   facebookaccount String?
   gender          Gender
 
-  course          Course[]
   comment         Comment[]
   enrollment      Enrollment[]
   registeredAt    DateTime  @default(now())
@@ -63,9 +62,6 @@ model Course {
   comment     Comment[]
   lesson      Lesson[]
   enrollment  Enrollment[]
-
-  userId String  @unique
-  user   User    @relation(fields: [userId], references: [id])  
 }
 
 model Lesson {

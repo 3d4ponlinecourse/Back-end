@@ -9,6 +9,8 @@ exports.includeUser = {
             id: true,
             username: true,
             password: false,
+            course: true,
+            comment: true,
         },
     },
 };

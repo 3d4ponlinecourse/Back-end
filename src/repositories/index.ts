@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { ICreateUser, IUser } from "../entities/user";
-import { ICourse } from "../entities/course";
+import { ICreateCourse, ICourse } from "../entities/course";
 import { ICreateComment, IComment } from "../entities/comment";
 import { ICreateLesson, ILesson } from "../entities/lesson";
 import { IEnrollment } from "../entities/enrollment";
@@ -30,6 +30,7 @@ export interface IRepositoryBlacklist {
 }
 
 export interface IRepositoryCourse {
+  createCourse(course: ICreateCourse): Promise<ICourse>;
   getCourses(): Promise<ICourse[]>;
   getCourseById(id: number): Promise<ICourse | null>;
 }

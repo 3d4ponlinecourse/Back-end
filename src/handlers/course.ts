@@ -1,4 +1,4 @@
-import { Response } from "express";
+import { Request, Response } from "express";
 
 import { IRepositoryCourse } from "../repositories";
 import { Empty, IHandlerCourse, WithID } from ".";
@@ -14,6 +14,30 @@ class HandlerCourse implements IHandlerCourse {
 
   constructor(repo: IRepositoryCourse) {
     this.repo = repo;
+  }
+
+  async createCourse(req: Request, res: Response): Promise<Response> {
+    const { courseName, videoUrl, duration, description } = req.body;
+    if (!courseName || !videoUrl || !duration || !description) {
+      return res
+        .status(400)
+        .json({ error: " missing some fields in body" })
+        .end();
+    }
+
+    try {
+      const course = await this.repo.createCourse({
+        courseName,
+        videoUrl,
+        duration,
+        description,
+      });
+      return res.status(200).json(course).end();
+    } catch (err) {
+      const errMsg = "failed to create course";
+      console.error(`${errMsg} ${err}`);
+      return res.status(500).json({ error: errMsg }).end();
+    }
   }
 
   async getCourses(
