@@ -67,7 +67,7 @@ async function main() {
     //lesson
     lessonRouter.post("/", handlerLesson.createLesson.bind(handlerLesson));
     lessonRouter.get("/", handlerLesson.getLessons.bind(handlerLesson));
-    lessonRouter.get("/:id", handlerLesson.getLessonById.bind(handlerLesson));
+    lessonRouter.get("/:id", handlerLesson.getLessonByCourseId.bind(handlerLesson));
     //comment
     commentRouter.use(handlerMiddleware.jwtMiddleware.bind(handlerMiddleware));
     commentRouter.post("/", handlerComment.createComment.bind(handlerComment));

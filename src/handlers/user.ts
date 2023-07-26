@@ -24,7 +24,7 @@ class HandlerUser implements IHandlerUser {
     this.repoBlacklist = repoBlacklist;
   }
 
-  //register
+  //register;
   async register(req: Request, res: Response): Promise<Response> {
     const { username, password, firstname, lastname, email, gender } = req.body;
     if (
@@ -76,27 +76,26 @@ class HandlerUser implements IHandlerUser {
         .end();
     }
 
-    return this.repo
-      .getUser(username)
-      .then((user) => {
-        if (!compareHash(password, user.password)) {
-          return res
-            .status(401)
-            .json({ error: "invalid name or password" })
-            .end();
-        }
-        const payload: Payload = { id: user.id, username: user.username };
-        const token = newJwt(payload);
-
+    try {
+      const user = await this.repo.getUser(username);
+      if (!compareHash(password, user.password)) {
         return res
-          .status(200)
-          .json({ status: "logged in", accessToken: token })
+          .status(401)
+          .json({ error: "invalid name or password" })
           .end();
-      })
-      .catch((err) => {
-        console.error(`failed to get user: ${err}`);
-        return res.status(500).end();
-      });
+      }
+      const payload: Payload = { id: user.id, username: user.username };
+      const token = newJwt(payload);
+
+      return res
+        .status(200)
+        .json({ status: "logged in", accessToken: token })
+        .end();
+    } catch (err) {
+      const errMsg = `failed to login: ${username}`;
+      console.log({ error: `${errMsg}: ${err}` });
+      return res.status(500).json({ error: errMsg }).end();
+    }
   }
 
   async logout(

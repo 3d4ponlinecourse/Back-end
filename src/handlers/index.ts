@@ -75,7 +75,10 @@ export interface IHandlerCourse {
 export interface IHandlerLesson {
   createLesson(req: Request, res: Response): Promise<Response>;
   getLessons(req: Request, res: Response): Promise<Response>;
-  getLessonById(req: Request<{ id: number }>, res: Response): Promise<Response>;
+  getLessonByCourseId(
+    req: Request<{ courseId: number }>,
+    res: Response
+  ): Promise<Response>;
 }
 
 export interface IHandlerEnroll {

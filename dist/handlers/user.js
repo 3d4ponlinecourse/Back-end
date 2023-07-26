@@ -15,7 +15,7 @@ class HandlerUser {
         this.repo = repo;
         this.repoBlacklist = repoBlacklist;
     }
-    //register
+    //register;
     async register(req, res) {
         const { username, password, firstname, lastname, email, gender } = req.body;
         if (!username ||
@@ -58,9 +58,8 @@ class HandlerUser {
                 .json({ error: "missing username or password" })
                 .end();
         }
-        return this.repo
-            .getUser(username)
-            .then((user) => {
+        try {
+            const user = await this.repo.getUser(username);
             if (!(0, bcrypt_1.compareHash)(password, user.password)) {
                 return res
                     .status(401)
@@ -73,11 +72,12 @@ class HandlerUser {
                 .status(200)
                 .json({ status: "logged in", accessToken: token })
                 .end();
-        })
-            .catch((err) => {
-            console.error(`failed to get user: ${err}`);
-            return res.status(500).end();
-        });
+        }
+        catch (err) {
+            const errMsg = `failed to login: ${username}`;
+            console.log({ error: `${errMsg}: ${err}` });
+            return res.status(500).json({ error: errMsg }).end();
+        }
     }
     async logout(req, res) {
         return await this.repoBlacklist

@@ -16,6 +16,7 @@ class HandlerCourse implements IHandlerCourse {
     this.repo = repo;
   }
 
+  //create course
   async createCourse(req: Request, res: Response): Promise<Response> {
     const { courseName, videoUrl, duration, description } = req.body;
     if (!courseName || !videoUrl || !duration || !description) {
@@ -40,46 +41,42 @@ class HandlerCourse implements IHandlerCourse {
     }
   }
 
+  //get courses
   async getCourses(
     req: JwtAuthRequest<Empty, Empty>,
-    res: Response
+    res: Response<any, Record<string, any>>
   ): Promise<Response> {
-    return this.repo
-      .getCourses()
-      .then((courses) => res.status(200).json(courses).end())
-      .catch((err) => {
-        console.error(`failed to get courses: ${err}`);
-        return res.status(500).json({ error: `failed to get courses` });
-      });
+    try {
+      const courses = await this.repo.getCourses();
+      return res.status(200).json(courses).end();
+    } catch (err) {
+      const errMsg = "failed to get courses";
+      console.error(`${errMsg} ${err}`);
+      return res.status(500).json({ error: errMsg }).end();
+    }
   }
 
+  //get course by Id
   async getCourseById(
     req: JwtAuthRequest<WithID, Empty>,
     res: Response
   ): Promise<Response> {
     const id = Number(req.params.id);
+
     if (isNaN(id)) {
-      return res
-        .status(400)
-        .json({ error: `id ${req.params.id} is not a number` });
+      return res.status(400).json({ error: `id ${id} is not a number` });
     }
 
-    return this.repo
-      .getCourseById(id)
-      .then((todo) => {
-        if (!todo) {
-          return res
-            .status(404)
-            .json({ error: `no such todo: ${id}` })
-            .end();
-        }
-
-        return res.status(200).json(todo).end();
-      })
-      .catch((err) => {
-        const errMsg = `failed to get todo ${id}: ${err}`;
-        console.error(errMsg);
-        return res.status(500).json({ error: errMsg });
-      });
+    try {
+      const course = await this.repo.getCourseById(id);
+      if (!course) {
+        return res.status(404).json({ error: `no course ${id}` });
+      }
+      return res.status(200).json(course).end();
+    } catch (err) {
+      const errMsg = `failed to get courses id: ${id}`;
+      console.error(`${errMsg} ${err}`);
+      return res.status(500).json({ error: errMsg }).end();
+    }
   }
 }
