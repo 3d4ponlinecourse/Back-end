@@ -145,7 +145,7 @@ class HandlerUser implements IHandlerUser {
       if (!userWithId)
         return res.status(401).json("failed to get enrollmented users");
 
-      return res.status(200).json();
+      return res.status(200).json(userWithId);
     } catch (err) {
       const errMsg = `failed to get enrollmented users`;
       console.log({ error: `${errMsg}: ${err}` });

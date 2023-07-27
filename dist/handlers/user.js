@@ -120,7 +120,7 @@ class HandlerUser {
             const userWithId = await this.repo.getUserEnrollById(id);
             if (!userWithId)
                 return res.status(401).json("failed to get enrollmented users");
-            return res.status(200).json();
+            return res.status(200).json(userWithId);
         }
         catch (err) {
             const errMsg = `failed to get enrollmented users`;
