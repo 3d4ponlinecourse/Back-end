@@ -5,18 +5,18 @@ import express from "express";
 import cors from "cors";
 
 import { newRepositoryUser } from "./repositories/user";
-
-import { newHandlerUser } from "./handlers/user";
-
-import { newRepositoryBlacklist } from "./repositories/blacklist";
-import { HandlerMiddleware } from "./auth/jwt";
 import { newRepositoryCourse } from "./repositories/course";
 import { newRepositoryComment } from "./repositories/comment";
+import { newRepositoryLesson } from "./repositories/lesson";
+import { newRepositoryEnroll } from "./repositories/enrollent";
+
+import { newRepositoryBlacklist } from "./repositories/blacklist";
+
+import { newHandlerUser } from "./handlers/user";
+import { HandlerMiddleware } from "./auth/jwt";
 import { newHandlerComment } from "./handlers/comments";
 import { newHandlerCourse } from "./handlers/course";
-import { newRepositoryLesson } from "./repositories/lesson";
 import { newHandlerLesson } from "./handlers/lesson";
-import { newRepositoryEnroll } from "./repositories/enrollent";
 import { newHandlerEnroll } from "./handlers/enrollment";
 
 //create main function
@@ -77,6 +77,7 @@ async function main() {
   userRouter.post("/register", handlerUser.register.bind(handlerUser));
   userRouter.post("/login", handlerUser.login.bind(handlerUser));
   userRouter.post("/", handlerUser.getUsers.bind(handlerUser));
+
   userRouter.post("/enroll", handlerUser.enroll.bind(handlerUser));
   userRouter.get("/enroll", handlerUser.getUsersEnroll.bind(handlerUser));
   userRouter.get(
