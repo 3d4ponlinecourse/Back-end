@@ -9,7 +9,7 @@ exports.includeUser = {
             id: true,
             username: true,
             password: false,
-            course: true,
+            enrollment: true,
             comment: true,
         },
     },

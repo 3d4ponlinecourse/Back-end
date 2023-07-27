@@ -3,7 +3,7 @@ import { ICreateUser, IUser } from "../entities/user";
 import { ICreateCourse, ICourse } from "../entities/course";
 import { ICreateComment, IComment } from "../entities/comment";
 import { ICreateLesson, ILesson } from "../entities/lesson";
-import { IEnrollment } from "../entities/enrollment";
+import { IEnrollment, IUserWithEnrollment } from "../entities/enrollment";
 
 export const UserDb = new PrismaClient();
 
@@ -13,7 +13,7 @@ export const includeUser = {
       id: true,
       username: true,
       password: false,
-      course: true,
+      enrollment: true,
       comment: true,
     },
   },
@@ -22,6 +22,14 @@ export const includeUser = {
 export interface IRepositoryUser {
   createUser(user: ICreateUser): Promise<IUser>;
   getUser(username: string): Promise<IUser>;
+  getUsers(): Promise<IUser[]>;
+  getUsersEnroll(): Promise<IUserWithEnrollment[]>;
+  getUserEnrollById(id: string): Promise<IUserWithEnrollment | null>;
+  updateUser(
+    id: string,
+    user: { fullname?: string; lastname?: string; email?: string }
+  ): Promise<IUser>;
+  enroll(id: string, courseId: number): Promise<IEnrollment | null>;
 }
 
 export interface IRepositoryBlacklist {

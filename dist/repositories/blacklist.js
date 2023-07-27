@@ -22,6 +22,7 @@ class RepositoryBlacklist {
     async sAdd(token) {
         await this.db.sAdd(exports.keyBlacklist, token);
     }
+    //todo: refactor this condition
     async addToBlacklist(token) {
         const decoded = jsonwebtoken_1.default.decode(token);
         if (!decoded) {

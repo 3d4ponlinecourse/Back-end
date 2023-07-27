@@ -27,6 +27,7 @@ class RepositoryBlacklist {
     await this.db.sAdd(keyBlacklist, token);
   }
 
+  //todo: refactor this condition
   async addToBlacklist(token: string): Promise<void> {
     const decoded = jwt.decode(token);
     if (!decoded) {

@@ -61,7 +61,7 @@ class RepositoryComment {
         return await this.db.comment
             .update({ include: _1.includeUser, where, data })
             .catch((err) => {
-            return Promise.reject(`failed to update content ${where} with data ${data}`);
+            return Promise.reject(`failed to update content ${where} with data ${data}: ${err}`);
         });
     }
     async deleteComment(where) {

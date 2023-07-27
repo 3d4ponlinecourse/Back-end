@@ -2,6 +2,7 @@
 import { PrismaClient } from "@prisma/client";
 import { createClient } from "redis";
 import express from "express";
+import cors from "cors";
 
 import { newRepositoryUser } from "./repositories/user";
 
@@ -15,6 +16,8 @@ import { newHandlerComment } from "./handlers/comments";
 import { newHandlerCourse } from "./handlers/course";
 import { newRepositoryLesson } from "./repositories/lesson";
 import { newHandlerLesson } from "./handlers/lesson";
+import { newRepositoryEnroll } from "./repositories/enrollent";
+import { newHandlerEnroll } from "./handlers/enrollment";
 
 //create main function
 async function main() {
@@ -35,6 +38,7 @@ async function main() {
   const repoCouse = newRepositoryCourse(db);
   const repoComment = newRepositoryComment(db);
   const repoLesson = newRepositoryLesson(db);
+  const repoEnroll = newRepositoryEnroll(db);
 
   const repoBlacklist = newRepositoryBlacklist(redis);
 
@@ -42,21 +46,27 @@ async function main() {
   const handlerCourse = newHandlerCourse(repoCouse);
   const handlerComment = newHandlerComment(repoComment);
   const handlerLesson = newHandlerLesson(repoLesson);
+  const handlerEnroll = newHandlerEnroll(repoEnroll);
 
   const handlerMiddleware = new HandlerMiddleware(repoBlacklist);
 
   const port = process.env.PORT || 8000;
   const server = express();
+
   const userRouter = express.Router();
   const courseRouter = express.Router();
   const commentRouter = express.Router();
   const lessonRouter = express.Router();
+  const enrollRouter = express.Router();
 
+  server.use(cors());
   server.use(express.json());
-  server.use("/user", userRouter);
+
+  server.use("/", userRouter);
   server.use("/course", courseRouter);
   server.use("/lesson", lessonRouter);
   server.use("/comment", commentRouter);
+  server.use("/enroll", enrollRouter);
 
   //check server
   server.get("/", (_, res) => {
@@ -66,6 +76,17 @@ async function main() {
   //user router
   userRouter.post("/register", handlerUser.register.bind(handlerUser));
   userRouter.post("/login", handlerUser.login.bind(handlerUser));
+  userRouter.post("/", handlerUser.getUsers.bind(handlerUser));
+  userRouter.post("/enroll", handlerUser.enroll.bind(handlerUser));
+  userRouter.get("/enroll", handlerUser.getUsersEnroll.bind(handlerUser));
+  userRouter.get(
+    "/enroll/:id",
+    handlerUser.getUserEnrollById.bind(handlerUser)
+  );
+
+  userRouter.patch("/update/:id", handlerUser.updateUser.bind(handlerUser));
+
+  //userRouter.get("/", handlerUser.getUsers.bind(handlerUser));
 
   userRouter.get(
     "/logout",
@@ -97,6 +118,10 @@ async function main() {
     handlerComment.updateComment.bind(handlerComment)
   );
   commentRouter.delete("/", handlerComment.deleteComment.bind(handlerComment));
+
+  //enroll
+  enrollRouter.get("/", handlerEnroll.getEntolls.bind(handlerEnroll));
+  enrollRouter.get("/:id", handlerEnroll.getUserEnroll.bind(handlerEnroll));
 
   server.listen(port, () => console.log(`server listening on ${port}`));
 }

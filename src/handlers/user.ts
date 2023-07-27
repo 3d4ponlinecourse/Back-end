@@ -108,8 +108,81 @@ class HandlerUser implements IHandlerUser {
         res.status(200).json({ status: `logged out`, token: req.token }).end()
       )
       .catch((err) => {
-        console.error(`failed to logout`);
+        console.error(`failed to logout: ${err}`);
         return res.status(500).end();
       });
+  }
+
+  async getUsers(req: Request, res: Response): Promise<Response> {
+    try {
+      const users = await this.repo.getUsers();
+      if (!users) return res.status(401).json("failed to get users");
+      return res.status(200).json(users);
+    } catch (err) {
+      const errMsg = `failed to get users`;
+      console.log({ error: `${errMsg}: ${err}` });
+      return res.status(500).json({ error: errMsg }).end();
+    }
+  }
+
+  async getUsersEnroll(req: Request, res: Response): Promise<Response> {
+    try {
+      const users = await this.repo.getUsersEnroll();
+      if (!users)
+        return res.status(401).json("failed to get enrollmented users");
+      return res.status(200).json(users).end();
+    } catch (err) {
+      const errMsg = `failed to get users with enrollment`;
+      console.log({ error: `${errMsg}: ${err}` });
+      return res.status(500).json({ error: errMsg }).end();
+    }
+  }
+
+  async getUserEnrollById(req: Request, res: Response): Promise<Response> {
+    const id = req.params.id;
+    try {
+      const userWithId = await this.repo.getUserEnrollById(id);
+      if (!userWithId)
+        return res.status(401).json("failed to get enrollmented users");
+
+      return res.status(200).json();
+    } catch (err) {
+      const errMsg = `failed to get enrollmented users`;
+      console.log({ error: `${errMsg}: ${err}` });
+      return res.status(500).json({ error: errMsg }).end();
+    }
+  }
+
+  async enroll(req: Request, res: Response): Promise<Response> {
+    const { userId, courseId } = req.body;
+    try {
+      const enroll = await this.repo.enroll(userId, courseId);
+      if (!enroll)
+        return res.status(401).json(`failed to enroll this coures ${courseId}`);
+      return res.status(200).json(enroll);
+    } catch (err) {
+      const errMsg = `failed to get enrollmented users`;
+      console.log({ error: `${errMsg}: ${err}` });
+      return res.status(500).json({ error: errMsg }).end();
+    }
+  }
+
+  async updateUser(req: Request, res: Response): Promise<Response> {
+    const userId = req.params.userId;
+    const { fullname, lastname, email } = req.body;
+    try {
+      const updated = await this.repo.updateUser(userId, {
+        fullname,
+        lastname,
+        email,
+      });
+      if (!updated) return res.status(401).json(`userId ${userId} not found `);
+
+      return res.status(200).json(updated);
+    } catch (err) {
+      const errMsg = `failed to get enrollmented users`;
+      console.log({ error: `${errMsg}: ${err}` });
+      return res.status(500).json({ error: errMsg }).end();
+    }
   }
 }

@@ -36,6 +36,11 @@ export interface IHandlerUser {
   register(req: Request, res: Response): Promise<Response>;
   login(req: AppRequest<Empty, WithUser>, res: Response): Promise<Response>;
   logout(req: JwtAuthRequest<Empty, Empty>, res: Response): Promise<Response>;
+  getUsers(req: Request, res: Response): Promise<Response>;
+  enroll(req: Request, res: Response): Promise<Response>;
+  getUsersEnroll(req: Request, res: Response): Promise<Response>;
+  getUserEnrollById(req: Request, res: Response): Promise<Response>;
+  updateUser(req: Request, res: Response): Promise<Response>;
 }
 
 //handler comment

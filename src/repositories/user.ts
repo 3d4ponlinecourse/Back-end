@@ -2,6 +2,9 @@ import { PrismaClient } from "@prisma/client";
 
 import { ICreateUser, IUser } from "../entities/user";
 import { IRepositoryUser } from ".";
+import { IUserWithEnrollment } from "../entities/enrollment";
+
+import { IEnrollment } from "../entities/enrollment";
 // import { Prisma, PrismaClient } from "@prisma/client";
 
 //export new repo function
@@ -27,6 +30,10 @@ class RepositoryUser implements IRepositoryUser {
   }
 
   //get user
+  async getUsers(): Promise<IUser[]> {
+    return await this.db.user.findMany();
+  }
+
   async getUser(username: string): Promise<IUser> {
     return await this.db.user
       .findUnique({ where: { username } })
@@ -40,5 +47,54 @@ class RepositoryUser implements IRepositoryUser {
       .catch((err) =>
         Promise.reject(`failed to get user with condition ${username}: ${err}`)
       );
+  }
+
+  async getUserById(id: string): Promise<IUser | null> {
+    return await this.db.user.findUnique({ where: { id } });
+  }
+
+  async getUsersEnroll(): Promise<IUserWithEnrollment[]> {
+    return await this.db.user.findMany({
+      include: {
+        enrollment: true,
+      },
+    });
+  }
+
+  async getUserEnrollById(id: string): Promise<IUserWithEnrollment | null> {
+    return await this.db.user.findUnique({
+      include: { enrollment: true },
+      where: { id },
+    });
+  }
+
+  async enroll(id: string, courseId: number): Promise<IEnrollment | null> {
+    const course = await this.db.course.findUnique({
+      where: { id: courseId },
+    });
+    if (!course) throw new Error("course not found");
+
+    const user = await this.getUserEnrollById(id);
+    if (!user) throw new Error("student not found");
+
+    const enrollment = await this.db.enrollment.create({
+      data: {
+        userId: user.id,
+        courseId,
+        courseName: course.courseName,
+      },
+    });
+
+    return enrollment;
+  }
+
+  async updateUser(
+    id: string,
+    user: { fullname?: string; lastname?: string; email?: string }
+  ): Promise<IUser> {
+    return await this.db.user.update({
+      where: { id },
+      data: user,
+    });
   }
 }

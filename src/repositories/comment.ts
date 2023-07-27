@@ -74,7 +74,7 @@ class RepositoryComment implements IRepositoryComment {
       .update({ include: includeUser, where, data })
       .catch((err) => {
         return Promise.reject(
-          `failed to update content ${where} with data ${data}`
+          `failed to update content ${where} with data ${data}: ${err}`
         );
       });
   }
