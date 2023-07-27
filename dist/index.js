@@ -54,6 +54,8 @@ async function main() {
     const enrollRouter = express_1.default.Router();
     server.use((0, cors_1.default)());
     server.use(express_1.default.json());
+    server.use(express_1.default.urlencoded({ extended: false }));
+    server.use(express_1.default.static("public"));
     server.use("/user", userRouter);
     server.use("/course", courseRouter);
     server.use("/lesson", lessonRouter);
@@ -67,10 +69,10 @@ async function main() {
     userRouter.post("/register", handlerUser.register.bind(handlerUser));
     userRouter.post("/login", handlerUser.login.bind(handlerUser));
     userRouter.post("/", handlerUser.getUsers.bind(handlerUser));
-    userRouter.post("/enroll", handlerUser.enroll.bind(handlerUser));
-    userRouter.get("/enroll", handlerUser.getUsersEnroll.bind(handlerUser));
-    userRouter.get("/enroll/:id", handlerUser.getUserEnrollById.bind(handlerUser));
-    userRouter.patch("/update/:id", handlerUser.updateUser.bind(handlerUser));
+    userRouter.post("/enroll", handlerMiddleware.jwtMiddleware.bind(handlerMiddleware), handlerUser.enroll.bind(handlerUser));
+    userRouter.get("/enroll", handlerMiddleware.jwtMiddleware.bind(handlerMiddleware), handlerUser.getUsersEnroll.bind(handlerUser));
+    userRouter.get("/enroll/:id", handlerMiddleware.jwtMiddleware.bind(handlerMiddleware), handlerUser.getUserEnrollById.bind(handlerUser));
+    userRouter.patch("/update/:id", handlerMiddleware.jwtMiddleware.bind(handlerMiddleware), handlerUser.updateUser.bind(handlerUser));
     //userRouter.get("/", handlerUser.getUsers.bind(handlerUser));
     userRouter.get("/logout", handlerMiddleware.jwtMiddleware.bind(handlerMiddleware), handlerUser.logout.bind(handlerUser));
     //course
@@ -84,11 +86,11 @@ async function main() {
     lessonRouter.get("/:id", handlerLesson.getLessonByCourseId.bind(handlerLesson));
     //comment
     commentRouter.use(handlerMiddleware.jwtMiddleware.bind(handlerMiddleware));
-    commentRouter.post("/", handlerComment.createComment.bind(handlerComment));
     commentRouter.get("/", handlerComment.getComments.bind(handlerComment));
     commentRouter.get("/:id", handlerComment.getCommentById.bind(handlerComment));
-    commentRouter.patch("/update/:id", handlerComment.updateComment.bind(handlerComment));
-    commentRouter.delete("/", handlerComment.deleteComment.bind(handlerComment));
+    commentRouter.post("/", handlerMiddleware.jwtMiddleware.bind(handlerMiddleware), handlerComment.createComment.bind(handlerComment));
+    commentRouter.patch("/update/:id", handlerMiddleware.jwtMiddleware.bind(handlerMiddleware), handlerComment.updateComment.bind(handlerComment));
+    commentRouter.delete("/", handlerMiddleware.jwtMiddleware.bind(handlerMiddleware), handlerComment.deleteComment.bind(handlerComment));
     //enroll
     enrollRouter.get("/", handlerEnroll.getEntolls.bind(handlerEnroll));
     enrollRouter.get("/:id", handlerEnroll.getUserEnroll.bind(handlerEnroll));

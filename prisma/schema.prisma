@@ -70,7 +70,7 @@ model Lesson {
   videoUrl    String 
   duration    String
 
-  courseId Int    @unique
+  courseId Int    
   course   Course @relation(fields: [courseId], references: [id])
 } 
 
@@ -81,7 +81,7 @@ model Enrollment {
   courseId    Int    
   course      Course  @relation(fields: [courseId], references: [id])
 
-  userId      String  @unique
+  userId      String  
   user        User    @relation(fields: [userId], references: [id])
 
 }
