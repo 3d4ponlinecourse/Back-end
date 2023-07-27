@@ -9,16 +9,16 @@ const redis_1 = require("redis");
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const user_1 = require("./repositories/user");
-const user_2 = require("./handlers/user");
-const blacklist_1 = require("./repositories/blacklist");
-const jwt_1 = require("./auth/jwt");
 const course_1 = require("./repositories/course");
 const comment_1 = require("./repositories/comment");
+const lesson_1 = require("./repositories/lesson");
+const enrollent_1 = require("./repositories/enrollent");
+const blacklist_1 = require("./repositories/blacklist");
+const user_2 = require("./handlers/user");
+const jwt_1 = require("./auth/jwt");
 const comments_1 = require("./handlers/comments");
 const course_2 = require("./handlers/course");
-const lesson_1 = require("./repositories/lesson");
 const lesson_2 = require("./handlers/lesson");
-const enrollent_1 = require("./repositories/enrollent");
 const enrollment_1 = require("./handlers/enrollment");
 //create main function
 async function main() {
@@ -54,7 +54,7 @@ async function main() {
     const enrollRouter = express_1.default.Router();
     server.use((0, cors_1.default)());
     server.use(express_1.default.json());
-    server.use("/", userRouter);
+    server.use("/user", userRouter);
     server.use("/course", courseRouter);
     server.use("/lesson", lessonRouter);
     server.use("/comment", commentRouter);

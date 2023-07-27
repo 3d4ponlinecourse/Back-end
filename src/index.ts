@@ -61,8 +61,10 @@ async function main() {
 
   server.use(cors());
   server.use(express.json());
+  server.use(express.urlencoded({ extended: false }));
+  server.use(express.static("public"));
 
-  server.use("/", userRouter);
+  server.use("/user", userRouter);
   server.use("/course", courseRouter);
   server.use("/lesson", lessonRouter);
   server.use("/comment", commentRouter);
@@ -78,14 +80,27 @@ async function main() {
   userRouter.post("/login", handlerUser.login.bind(handlerUser));
   userRouter.post("/", handlerUser.getUsers.bind(handlerUser));
 
-  userRouter.post("/enroll", handlerUser.enroll.bind(handlerUser));
-  userRouter.get("/enroll", handlerUser.getUsersEnroll.bind(handlerUser));
+  userRouter.post(
+    "/enroll",
+    handlerMiddleware.jwtMiddleware.bind(handlerMiddleware),
+    handlerUser.enroll.bind(handlerUser)
+  );
+  userRouter.get(
+    "/enroll",
+    handlerMiddleware.jwtMiddleware.bind(handlerMiddleware),
+    handlerUser.getUsersEnroll.bind(handlerUser)
+  );
   userRouter.get(
     "/enroll/:id",
+    handlerMiddleware.jwtMiddleware.bind(handlerMiddleware),
     handlerUser.getUserEnrollById.bind(handlerUser)
   );
 
-  userRouter.patch("/update/:id", handlerUser.updateUser.bind(handlerUser));
+  userRouter.patch(
+    "/update/:id",
+    handlerMiddleware.jwtMiddleware.bind(handlerMiddleware),
+    handlerUser.updateUser.bind(handlerUser)
+  );
 
   //userRouter.get("/", handlerUser.getUsers.bind(handlerUser));
 
@@ -111,14 +126,23 @@ async function main() {
 
   //comment
   commentRouter.use(handlerMiddleware.jwtMiddleware.bind(handlerMiddleware));
-  commentRouter.post("/", handlerComment.createComment.bind(handlerComment));
   commentRouter.get("/", handlerComment.getComments.bind(handlerComment));
   commentRouter.get("/:id", handlerComment.getCommentById.bind(handlerComment));
+  commentRouter.post(
+    "/",
+    handlerMiddleware.jwtMiddleware.bind(handlerMiddleware),
+    handlerComment.createComment.bind(handlerComment)
+  );
   commentRouter.patch(
     "/update/:id",
+    handlerMiddleware.jwtMiddleware.bind(handlerMiddleware),
     handlerComment.updateComment.bind(handlerComment)
   );
-  commentRouter.delete("/", handlerComment.deleteComment.bind(handlerComment));
+  commentRouter.delete(
+    "/",
+    handlerMiddleware.jwtMiddleware.bind(handlerMiddleware),
+    handlerComment.deleteComment.bind(handlerComment)
+  );
 
   //enroll
   enrollRouter.get("/", handlerEnroll.getEntolls.bind(handlerEnroll));
