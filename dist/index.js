@@ -68,7 +68,7 @@ async function main() {
     //user router
     userRouter.post("/register", handlerUser.register.bind(handlerUser));
     userRouter.post("/login", handlerUser.login.bind(handlerUser));
-    userRouter.post("/", handlerUser.getUsers.bind(handlerUser));
+    userRouter.get("/", handlerUser.getUsers.bind(handlerUser));
     userRouter.post("/enroll", handlerMiddleware.jwtMiddleware.bind(handlerMiddleware), handlerUser.enroll.bind(handlerUser));
     userRouter.get("/enroll", handlerMiddleware.jwtMiddleware.bind(handlerMiddleware), handlerUser.getUsersEnroll.bind(handlerUser));
     userRouter.get("/enroll/:id", handlerMiddleware.jwtMiddleware.bind(handlerMiddleware), handlerUser.getUserEnrollById.bind(handlerUser));

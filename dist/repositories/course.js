@@ -22,11 +22,20 @@ class RepositortCourse {
     }
     //get course
     async getCourses() {
-        return await this.db.course.findMany({});
+        return await this.db.course.findMany({
+            include: {
+                lesson: true,
+                enrollment: true,
+            },
+        });
     }
     //waiting for connected with comments
     async getCourseById(id) {
         return await this.db.course.findUnique({
+            include: {
+                lesson: true,
+                enrollment: true,
+            },
             where: {
                 id,
             },

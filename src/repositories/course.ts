@@ -28,12 +28,21 @@ class RepositortCourse implements IRepositoryCourse {
 
   //get course
   async getCourses(): Promise<ICourse[]> {
-    return await this.db.course.findMany({});
+    return await this.db.course.findMany({
+      include: {
+        lesson: true,
+        enrollment: true,
+      },
+    });
   }
 
   //waiting for connected with comments
   async getCourseById(id: number): Promise<ICourse | null> {
     return await this.db.course.findUnique({
+      include: {
+        lesson: true,
+        enrollment: true,
+      },
       where: {
         id,
       },

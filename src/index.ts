@@ -78,7 +78,7 @@ async function main() {
   //user router
   userRouter.post("/register", handlerUser.register.bind(handlerUser));
   userRouter.post("/login", handlerUser.login.bind(handlerUser));
-  userRouter.post("/", handlerUser.getUsers.bind(handlerUser));
+  userRouter.get("/", handlerUser.getUsers.bind(handlerUser));
 
   userRouter.post(
     "/enroll",
