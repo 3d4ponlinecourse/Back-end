@@ -16,6 +16,7 @@ class RepositortCourse {
                 courseName: course.courseName,
                 videoUrl: course.videoUrl,
                 duration: course.duration,
+                imageUrl: course.imageUrl,
                 description: course.description,
             },
         });

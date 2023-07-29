@@ -63,14 +63,14 @@ class HandlerUser {
             if (!(0, bcrypt_1.compareHash)(password, user.password)) {
                 return res
                     .status(401)
-                    .json({ error: "invalid name or password" })
+                    .json({ error: "invalid name or password", statusCode: 401 })
                     .end();
             }
             const payload = { id: user.id, username: user.username };
             const token = (0, jwt_1.newJwt)(payload);
             return res
                 .status(200)
-                .json({ status: "logged in", accessToken: token })
+                .json({ status: "logged in", accessToken: token, id: user.id })
                 .end();
         }
         catch (err) {

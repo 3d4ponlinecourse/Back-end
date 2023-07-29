@@ -6,11 +6,11 @@ export interface ICreateCourse {
   courseName: string;
   videoUrl: string | null;
   duration: string;
-  imageUrl: string| null;
+  imageUrl: string | null;
   description: string;
 }
 
-export interface ICourse extends ICreateCourse{
+export interface ICourse extends ICreateCourse {
   id: number;
   enrollment?: IEnrollment[];
   lesson?: ILesson[];

@@ -12,8 +12,8 @@ class HandlerCourse {
     }
     //create course
     async createCourse(req, res) {
-        const { courseName, videoUrl, duration, description } = req.body;
-        if (!courseName || !videoUrl || !duration || !description) {
+        const { courseName, videoUrl, duration, description, imageUrl } = req.body;
+        if (!courseName || !videoUrl || !duration || !description || !imageUrl) {
             return res
                 .status(400)
                 .json({ error: " missing some fields in body" })
@@ -24,6 +24,7 @@ class HandlerCourse {
                 courseName,
                 videoUrl,
                 duration,
+                imageUrl,
                 description,
             });
             return res.status(200).json(course).end();

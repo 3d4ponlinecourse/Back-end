@@ -81,7 +81,7 @@ class HandlerUser implements IHandlerUser {
       if (!compareHash(password, user.password)) {
         return res
           .status(401)
-          .json({ error: "invalid name or password",statusCode: 401 })
+          .json({ error: "invalid name or password", statusCode: 401 })
           .end();
       }
       const payload: Payload = { id: user.id, username: user.username };
@@ -89,7 +89,7 @@ class HandlerUser implements IHandlerUser {
 
       return res
         .status(200)
-        .json({ status: "logged in", accessToken: token })
+        .json({ status: "logged in", accessToken: token, id: user.id })
         .end();
     } catch (err) {
       const errMsg = `failed to login: ${username}`;
