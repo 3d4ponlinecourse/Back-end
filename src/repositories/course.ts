@@ -21,6 +21,7 @@ class RepositortCourse implements IRepositoryCourse {
         courseName: course.courseName,
         videoUrl: course.videoUrl,
         duration: course.duration,
+        imageUrl: course.imageUrl,
         description: course.description,
       },
     });
