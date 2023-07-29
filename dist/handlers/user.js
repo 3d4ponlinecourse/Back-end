@@ -70,7 +70,7 @@ class HandlerUser {
             const token = (0, jwt_1.newJwt)(payload);
             return res
                 .status(200)
-                .json({ status: "logged in", accessToken: token, id: user.id })
+                .json({ status: "logged in", accessToken: token, userId: user.id })
                 .end();
         }
         catch (err) {

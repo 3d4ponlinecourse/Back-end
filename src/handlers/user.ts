@@ -89,7 +89,7 @@ class HandlerUser implements IHandlerUser {
 
       return res
         .status(200)
-        .json({ status: "logged in", accessToken: token, id: user.id })
+        .json({ status: "logged in", accessToken: token, userId: user.id })
         .end();
     } catch (err) {
       const errMsg = `failed to login: ${username}`;
