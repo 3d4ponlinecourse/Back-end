@@ -79,12 +79,14 @@ async function main() {
   userRouter.post("/register", handlerUser.register.bind(handlerUser));
   userRouter.post("/login", handlerUser.login.bind(handlerUser));
   userRouter.get("/", handlerUser.getUsers.bind(handlerUser));
+  userRouter.get("/:id", handlerUser.getUserById.bind(handlerUser));
 
   userRouter.post(
     "/enroll",
     handlerMiddleware.jwtMiddleware.bind(handlerMiddleware),
     handlerUser.enroll.bind(handlerUser)
   );
+
   userRouter.get(
     "/enroll",
     handlerMiddleware.jwtMiddleware.bind(handlerMiddleware),

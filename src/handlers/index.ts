@@ -37,6 +37,7 @@ export interface IHandlerUser {
   login(req: AppRequest<Empty, WithUser>, res: Response): Promise<Response>;
   logout(req: JwtAuthRequest<Empty, Empty>, res: Response): Promise<Response>;
   getUsers(req: Request, res: Response): Promise<Response>;
+  getUserById(req: Request, res: Response): Promise<Response>;
   enroll(req: Request, res: Response): Promise<Response>;
   getUsersEnroll(req: Request, res: Response): Promise<Response>;
   getUserEnrollById(req: Request, res: Response): Promise<Response>;

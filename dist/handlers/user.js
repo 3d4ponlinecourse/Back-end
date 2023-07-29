@@ -101,6 +101,22 @@ class HandlerUser {
             return res.status(500).json({ error: errMsg }).end();
         }
     }
+    async getUserById(req, res) {
+        const id = req.params.id;
+        if (!id)
+            return res.status(400).json("no params id").end();
+        try {
+            const user = await this.repo.getUserById(id);
+            if (!user)
+                return res.status(401).json("failed to get user by Id");
+            return res.status(200).json(user).end();
+        }
+        catch (err) {
+            const errMsg = `failed to get users`;
+            console.log({ error: `${errMsg}: ${err}` });
+            return res.status(500).json({ error: errMsg }).end();
+        }
+    }
     async getUsersEnroll(req, res) {
         try {
             const users = await this.repo.getUsersEnroll();

@@ -125,6 +125,20 @@ class HandlerUser implements IHandlerUser {
     }
   }
 
+  async getUserById(req: Request, res: Response): Promise<Response> {
+    const id = req.params.id;
+    if (!id) return res.status(400).json("no params id").end();
+    try {
+      const user = await this.repo.getUserById(id);
+      if (!user) return res.status(401).json("failed to get user by Id");
+      return res.status(200).json(user).end();
+    } catch (err) {
+      const errMsg = `failed to get users`;
+      console.log({ error: `${errMsg}: ${err}` });
+      return res.status(500).json({ error: errMsg }).end();
+    }
+  }
+
   async getUsersEnroll(req: Request, res: Response): Promise<Response> {
     try {
       const users = await this.repo.getUsersEnroll();
@@ -142,6 +156,7 @@ class HandlerUser implements IHandlerUser {
     const id = req.params.id;
     try {
       const userWithId = await this.repo.getUserEnrollById(id);
+
       if (!userWithId)
         return res.status(401).json("failed to get enrollmented users");
 

@@ -69,7 +69,7 @@ model Lesson {
   videoUrl   String
   duration   String
 
-  courseId Int    
+  courseId Int
   course   Course @relation(fields: [courseId], references: [id])
 }
 

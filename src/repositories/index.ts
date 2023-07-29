@@ -22,6 +22,7 @@ export const includeUser = {
 export interface IRepositoryUser {
   createUser(user: ICreateUser): Promise<IUser>;
   getUser(username: string): Promise<IUser>;
+  getUserById(id: string): Promise<IUser | null>;
   getUsers(): Promise<IUser[]>;
   getUsersEnroll(): Promise<IUserWithEnrollment[]>;
   getUserEnrollById(id: string): Promise<IUserWithEnrollment | null>;
