@@ -27,6 +27,7 @@ class RepositortCourse {
             include: {
                 lesson: true,
                 enrollment: true,
+                comment: true,
             },
         });
     }
@@ -36,6 +37,7 @@ class RepositortCourse {
             include: {
                 lesson: true,
                 enrollment: true,
+                comment: true,
             },
             where: {
                 id,

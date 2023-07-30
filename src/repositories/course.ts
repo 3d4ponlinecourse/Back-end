@@ -33,6 +33,7 @@ class RepositortCourse implements IRepositoryCourse {
       include: {
         lesson: true,
         enrollment: true,
+        comment: true,
       },
     });
   }
@@ -43,6 +44,7 @@ class RepositortCourse implements IRepositoryCourse {
       include: {
         lesson: true,
         enrollment: true,
+        comment: true,
       },
       where: {
         id,

@@ -42,10 +42,10 @@ model Comment {
   updatedAt DateTime @updatedAt
   rating    Int
 
-  userId String @unique
+  userId String 
   user   User   @relation(fields: [userId], references: [id])
 
-  courseId Int    @unique
+  courseId Int    
   course   Course @relation(fields: [courseId], references: [id])
 }
 
