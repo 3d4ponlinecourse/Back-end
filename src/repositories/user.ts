@@ -90,7 +90,7 @@ class RepositoryUser implements IRepositoryUser {
 
   async updateUser(
     id: string,
-    user: { fullname?: string; lastname?: string; email?: string }
+    user: { firstname?: string; lastname?: string; email?: string }
   ): Promise<IUser> {
     return await this.db.user.update({
       where: { id },

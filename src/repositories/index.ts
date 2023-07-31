@@ -28,7 +28,7 @@ export interface IRepositoryUser {
   getUserEnrollById(id: string): Promise<IUserWithEnrollment | null>;
   updateUser(
     id: string,
-    user: { fullname?: string; lastname?: string; email?: string }
+    user: { firstname?: string; lastname?: string; email?: string }
   ): Promise<IUser>;
   enroll(id: string, courseId: number): Promise<IEnrollment | null>;
 }

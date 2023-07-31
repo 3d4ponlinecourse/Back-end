@@ -98,11 +98,7 @@ async function main() {
     handlerUser.getUserEnrollById.bind(handlerUser)
   );
 
-  userRouter.patch(
-    "/update/:id",
-    handlerMiddleware.jwtMiddleware.bind(handlerMiddleware),
-    handlerUser.updateUser.bind(handlerUser)
-  );
+  userRouter.patch("/update/:id", handlerUser.updateUser.bind(handlerUser));
 
   //userRouter.get("/", handlerUser.getUsers.bind(handlerUser));
 

@@ -73,7 +73,7 @@ async function main() {
     userRouter.post("/enroll", handlerMiddleware.jwtMiddleware.bind(handlerMiddleware), handlerUser.enroll.bind(handlerUser));
     userRouter.get("/enroll", handlerMiddleware.jwtMiddleware.bind(handlerMiddleware), handlerUser.getUsersEnroll.bind(handlerUser));
     userRouter.get("/enroll/:id", handlerMiddleware.jwtMiddleware.bind(handlerMiddleware), handlerUser.getUserEnrollById.bind(handlerUser));
-    userRouter.patch("/update/:id", handlerMiddleware.jwtMiddleware.bind(handlerMiddleware), handlerUser.updateUser.bind(handlerUser));
+    userRouter.patch("/update/:id", handlerUser.updateUser.bind(handlerUser));
     //userRouter.get("/", handlerUser.getUsers.bind(handlerUser));
     userRouter.get("/logout", handlerMiddleware.jwtMiddleware.bind(handlerMiddleware), handlerUser.logout.bind(handlerUser));
     //course

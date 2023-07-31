@@ -184,10 +184,10 @@ class HandlerUser implements IHandlerUser {
 
   async updateUser(req: Request, res: Response): Promise<Response> {
     const userId = req.params.userId;
-    const { fullname, lastname, email } = req.body;
+    const { firstname, lastname, email } = req.body;
     try {
       const updated = await this.repo.updateUser(userId, {
-        fullname,
+        firstname,
         lastname,
         email,
       });
@@ -195,7 +195,7 @@ class HandlerUser implements IHandlerUser {
 
       return res.status(200).json(updated);
     } catch (err) {
-      const errMsg = `failed to get enrollmented users`;
+      const errMsg = `failed to get update user`;
       console.log({ error: `${errMsg}: ${err}` });
       return res.status(500).json({ error: errMsg }).end();
     }
