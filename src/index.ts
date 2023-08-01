@@ -22,7 +22,7 @@ import { newHandlerEnroll } from "./handlers/enrollment";
 //create main function
 async function main() {
   const db = new PrismaClient();
-  const redis = createClient();
+  const redis = createClient({ url: process.env.REDIS_URL });
 
   try {
     redis.connect();

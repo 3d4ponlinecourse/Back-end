@@ -1,0 +1,27 @@
+volumes:
+  compose-volume:
+    external: true
+    name: postgres-volume
+
+services:
+  app:
+    image: back-end
+    build:
+      context: ..
+    environment:
+      REDIS_URL: redis://redis:6379
+      DATABASE_URL: postgresql://postgres:3dsecret@localhost:5432/postgres?schema=public
+      CORS: "no"
+    ports:
+      - "8000:8000"
+
+  redis:
+    image: redis:latest
+
+  postgres:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=3dsecret
+    volumes:
+      - "compose-volume:/var/lib/postgresql"
