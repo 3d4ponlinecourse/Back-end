@@ -25,8 +25,8 @@ async function main() {
   const redis = createClient({ url: process.env.REDIS_URL });
 
   try {
-    redis.connect();
-    db.$connect();
+    await redis.connect();
+    await db.$connect();
   } catch (err) {
     console.error(err);
     return;

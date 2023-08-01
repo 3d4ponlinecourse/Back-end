@@ -1,4 +1,4 @@
-name: 3d4p workflows
+name: 3d4p-be
 
 on:
   push:
@@ -24,4 +24,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/back-end:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/3d4p-be:latest

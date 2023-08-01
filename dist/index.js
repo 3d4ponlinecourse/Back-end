@@ -23,10 +23,10 @@ const enrollment_1 = require("./handlers/enrollment");
 //create main function
 async function main() {
     const db = new client_1.PrismaClient();
-    const redis = (0, redis_1.createClient)();
+    const redis = (0, redis_1.createClient)({ url: process.env.REDIS_URL });
     try {
-        redis.connect();
-        db.$connect();
+        await redis.connect();
+        await db.$connect();
     }
     catch (err) {
         console.error(err);

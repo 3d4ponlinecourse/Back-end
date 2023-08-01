@@ -1,7 +1,4 @@
 -- CreateEnum
-CREATE TYPE "Role" AS ENUM ('USER', 'ADMIN');
-
--- CreateEnum
 CREATE TYPE "Gender" AS ENUM ('FEMALE', 'MALE', 'LGBTQ', 'PREFERNOTTOSAY');
 
 -- CreateTable
@@ -16,7 +13,6 @@ CREATE TABLE "User" (
     "googleaccount" TEXT,
     "facebookaccount" TEXT,
     "gender" "Gender" NOT NULL,
-    "role" "Role" NOT NULL,
     "registeredAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
@@ -28,7 +24,10 @@ CREATE TABLE "Comment" (
     "comment" TEXT NOT NULL,
     "photo" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "rating" INTEGER NOT NULL,
     "userId" TEXT NOT NULL,
+    "courseId" INTEGER NOT NULL,
 
     CONSTRAINT "Comment_pkey" PRIMARY KEY ("id")
 );
@@ -37,11 +36,10 @@ CREATE TABLE "Comment" (
 CREATE TABLE "Course" (
     "id" SERIAL NOT NULL,
     "courseName" TEXT NOT NULL,
-    "teacherName" TEXT NOT NULL,
-    "duration" INTEGER NOT NULL,
+    "videoUrl" TEXT,
+    "imageUrl" TEXT,
+    "duration" TEXT NOT NULL,
     "description" TEXT NOT NULL,
-    "comment" TEXT NOT NULL,
-    "userId" TEXT NOT NULL,
 
     CONSTRAINT "Course_pkey" PRIMARY KEY ("id")
 );
@@ -49,10 +47,22 @@ CREATE TABLE "Course" (
 -- CreateTable
 CREATE TABLE "Lesson" (
     "id" SERIAL NOT NULL,
-    "lessionName" TEXT NOT NULL,
+    "lessonName" TEXT NOT NULL,
+    "videoUrl" TEXT NOT NULL,
+    "duration" TEXT NOT NULL,
     "courseId" INTEGER NOT NULL,
 
     CONSTRAINT "Lesson_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Enrollment" (
+    "id" SERIAL NOT NULL,
+    "courseName" TEXT NOT NULL,
+    "courseId" INTEGER NOT NULL,
+    "userId" TEXT NOT NULL,
+
+    CONSTRAINT "Enrollment_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -62,25 +72,19 @@ CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Comment_userId_key" ON "Comment"("userId");
-
--- CreateIndex
 CREATE UNIQUE INDEX "Course_courseName_key" ON "Course"("courseName");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Course_teacherName_key" ON "Course"("teacherName");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Course_userId_key" ON "Course"("userId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Lesson_courseId_key" ON "Lesson"("courseId");
 
 -- AddForeignKey
 ALTER TABLE "Comment" ADD CONSTRAINT "Comment_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Course" ADD CONSTRAINT "Course_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Comment" ADD CONSTRAINT "Comment_courseId_fkey" FOREIGN KEY ("courseId") REFERENCES "Course"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Lesson" ADD CONSTRAINT "Lesson_courseId_fkey" FOREIGN KEY ("courseId") REFERENCES "Course"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Enrollment" ADD CONSTRAINT "Enrollment_courseId_fkey" FOREIGN KEY ("courseId") REFERENCES "Course"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Enrollment" ADD CONSTRAINT "Enrollment_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -1,19 +1,19 @@
 volumes:
   compose-volume:
-    external: true
-    name: postgres-volume
 
 services:
-  app:
-    image: back-end
-    build:
-      context: ..
+  be:
+    image: shinchinshin/3d4p-be:latest
     environment:
       REDIS_URL: redis://redis:6379
       DATABASE_URL: postgresql://postgres:3dsecret@localhost:5432/postgres?schema=public
       CORS: "no"
     ports:
       - "8000:8000"
+
+  fe: image shinchinshin/3d4p:latest
+    ports:
+      - "80:80"
 
   redis:
     image: redis:latest
