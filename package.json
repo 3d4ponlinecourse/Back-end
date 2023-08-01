@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "npx tsc",
+    "init_db": "npx tsc && node dist/init_db/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

@@ -7,7 +7,7 @@
     "duration": "9h 54mn",
     "description": "Create your first scene and understand fundamentals like cameras, geometries, materials, textures. Add a debug panel to tweak your environment and animate everything.",
     "comment": [],
-    "Lesson": [
+    "lessons": [
       {
         "id": 1,
         "lessonName": "Introduction",
@@ -48,7 +48,7 @@
     "duration": "6h 20mn",
     "description": "Illuminate your scene with various lights, start practicing environment creation and create millions of particles.",
     "comment": [],
-    "Lesson": [
+    "lessons": [
       {
         "id": 15,
         "lessonName": "Lights",
@@ -95,7 +95,7 @@
     "duration": "12h 37mn",
     "description": "Add physics to your world so that objects start to collide and stumble. Then import your own model made with Blender and make it look as realistic as possible.",
     "comment": [],
-    "Lesson": [
+    "lessons": [
       {
         "id": 21,
         "lessonName": "Physics",
