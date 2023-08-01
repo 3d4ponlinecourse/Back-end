@@ -5,8 +5,8 @@ services:
   be:
     image: shinchinshin/3d4p-be:latest
     environment:
-      REDIS_URL: redis://redis:6379
-      DATABASE_URL: postgresql://postgres:3dsecret@localhost:5432/postgres?schema=public
+      REDIS_URL: redis://rd:6379
+      DATABASE_URL: postgresql://postgres:3dsecret@pg:5432/postgres?schema=public
       CORS: "no"
     ports:
       - "8000:8000"
@@ -15,10 +15,10 @@ services:
     ports:
       - "80:80"
 
-  redis:
+  rd:
     image: redis:latest
 
-  postgres:
+  pg:
     image: postgres:latest
     environment:
       - POSTGRES_USER=postgres

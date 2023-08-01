@@ -2,7 +2,6 @@
 import { PrismaClient } from "@prisma/client";
 import { createClient } from "redis";
 import express from "express";
-import cors from "cors";
 
 import { newRepositoryUser } from "./repositories/user";
 import { newRepositoryCourse } from "./repositories/course";
@@ -21,6 +20,8 @@ import { newHandlerEnroll } from "./handlers/enrollment";
 
 //create main function
 async function main() {
+  const useCors = process.env.CORS || "yes";
+
   const db = new PrismaClient();
   const redis = createClient({ url: process.env.REDIS_URL });
 
@@ -53,16 +54,21 @@ async function main() {
   const port = process.env.PORT || 8000;
   const server = express();
 
+  server.use(express.json());
+  server.use(express.urlencoded({ extended: false }));
+  server.use(express.static("public"));
+  if (useCors.startsWith("y")) {
+    console.log(`using CORS due to env CORS: ${useCors}`);
+
+    const cors = require("cors");
+    server.use(cors());
+  }
+
   const userRouter = express.Router();
   const courseRouter = express.Router();
   const commentRouter = express.Router();
   const lessonRouter = express.Router();
   const enrollRouter = express.Router();
-
-  server.use(cors());
-  server.use(express.json());
-  server.use(express.urlencoded({ extended: false }));
-  server.use(express.static("public"));
 
   server.use("/user", userRouter);
   server.use("/course", courseRouter);
