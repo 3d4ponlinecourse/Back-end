@@ -11,7 +11,8 @@ services:
     ports:
       - "8000:8000"
 
-  fe: image shinchinshin/3d4p:latest
+  fe:
+    image: shinchinshin/3d4p:latest
     ports:
       - "80:80"
 
